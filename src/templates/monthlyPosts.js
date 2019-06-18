@@ -42,6 +42,7 @@ export default function Template({ pageContext, data }) {
           const { slug } = node.fields
           const { title, date } = node.frontmatter
           const { excerpt } = node
+          const pageLink = "/" + title + "/"
           return (
             <div className="blog-posts" key={slug}>
               {" "}
@@ -49,7 +50,7 @@ export default function Template({ pageContext, data }) {
                 {" "}
                 <h2>
                   {" "}
-                  <a href={slug}>{title}</a>{" "}
+                  <a href={pageLink}>{title}</a>{" "}
                 </h2>{" "}
                 <h3>{date}</h3> <p>{excerpt}</p>{" "}
               </div>

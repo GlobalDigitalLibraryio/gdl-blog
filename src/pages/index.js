@@ -65,22 +65,20 @@ export default function bp({ data }) {
       </Dropdowns>
       <div className="blog-posts">
         {" "}
-        {posts
-          .filter(post => post.node.frontmatter.title.length > 0)
-          .map(({ node: post }) => {
-            return (
-              <div className="blog-post-preview" key={post.id}>
+        {posts.map(({ node: post }) => {
+          return (
+            <div className="blog-post-preview" key={post.id}>
+              {" "}
+              <h2>
                 {" "}
-                <h2>
-                  {" "}
-                  <a href={post.frontmatter.path}>
-                    {post.frontmatter.title}
-                  </a>{" "}
-                </h2>{" "}
-                <h3>{post.frontmatter.date}</h3> <p>{post.excerpt}</p>{" "}
-              </div>
-            )
-          })}{" "}
+                <a href={post.frontmatter.title}>
+                  {post.frontmatter.title}
+                </a>{" "}
+              </h2>{" "}
+              <h3>{post.frontmatter.date}</h3> <p>{post.excerpt}</p>{" "}
+            </div>
+          )
+        })}{" "}
       </div>
     </Layout>
   )

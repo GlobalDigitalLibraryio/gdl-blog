@@ -3,6 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
 import Dropdowns from "../components/dropdowns"
+import Divider from "@material-ui/core/Divider"
 import {
   MakeFlatCategoireList,
   findMonthsAndYearsOfPosts,
@@ -23,7 +24,6 @@ export default function Template({ data }) {
   var categories = MakeFlatCategoireList(categories2d)
   var archives = findMonthsAndYearsOfPosts(dates)
   var recentPosts = fiveRecentPosts(allPosts)
-
   return (
     <Layout className="blog-post-container">
       <Dropdowns>
@@ -44,6 +44,32 @@ export default function Template({ data }) {
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />{" "}
+          <div>
+            <b>posted in:</b>
+            {post.frontmatter.categories.map(category => {
+              function maybeComma() {
+                if (
+                  !post.frontmatter.categories.indexOf(category) + 1 ==
+                  post.frontmatter.categories.length
+                ) {
+                  return ","
+                }
+              }
+              return (
+                <a
+                  key={category}
+                  href={
+                    "/category/" + category.replace(/\s+/g, "-").toLowerCase()
+                  }
+                >
+                  {" "}
+                  {category}
+                  {maybeComma()}{" "}
+                </a>
+              )
+            })}
+          </div>
+          <Divider></Divider>
         </div>{" "}
       </div>
     </Layout>

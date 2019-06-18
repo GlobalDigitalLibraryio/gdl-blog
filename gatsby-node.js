@@ -114,7 +114,7 @@ exports.createPages = ({ actions, graphql }) => {
         },
       })
       createPage({
-        path: node.fields.slug,
+        path: node.frontmatter.title,
         component: plainLayout,
         context: {
           slug: node.fields.slug,

@@ -16,17 +16,17 @@ const Tags = ({ pageContext, data }) => {
         <h1>{tagHeader}</h1>
         <ul>
           {edges.map(({ node }) => {
-            const { slug } = node.fields
             const { title, date } = node.frontmatter
             const { excerpt } = node
+            const pageLink = "/" + title + "/"
             return (
-              <div className="blog-posts" key={slug}>
+              <div className="blog-posts" key={title}>
                 {" "}
                 <div className="blog-post-preview">
                   {" "}
                   <h2>
                     {" "}
-                    <a href={slug}>{title}</a>{" "}
+                    <a href={pageLink}>{title}</a>{" "}
                   </h2>{" "}
                   <h3>{date}</h3> <p>{excerpt}</p>{" "}
                 </div>
@@ -38,29 +38,6 @@ const Tags = ({ pageContext, data }) => {
       </div>
     </Layout>
   )
-}
-
-Tags.propTypes = {
-  pageContext: PropTypes.shape({
-    tag: PropTypes.string.isRequired,
-  }),
-  data: PropTypes.shape({
-    allMarkdownRemark: PropTypes.shape({
-      totalCount: PropTypes.number.isRequired,
-      edges: PropTypes.arrayOf(
-        PropTypes.shape({
-          node: PropTypes.shape({
-            frontmatter: PropTypes.shape({
-              title: PropTypes.string.isRequired,
-            }),
-            fields: PropTypes.shape({
-              slug: PropTypes.string.isRequired,
-            }),
-          }),
-        }).isRequired
-      ),
-    }),
-  }),
 }
 
 export default Tags

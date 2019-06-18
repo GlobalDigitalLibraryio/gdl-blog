@@ -29,7 +29,7 @@ export default function Dropdown({ children }) {
   }
   function getLink(listItem) {
     if (children.length > 2) return children[2][list.indexOf(listItem)]
-    else return listItem.replace(/\s+/g, "-").toLowerCase()
+    else return listItem
   }
   return (
     <div>
@@ -39,7 +39,7 @@ export default function Dropdown({ children }) {
         onClick={handleClick}
       >
         {
-          <a variant="body2" to="/" className={styles.toolbarLink}>
+          <a variant="body2" href="#" className={styles.toolbarLink}>
             {name}
           </a>
         }

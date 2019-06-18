@@ -50,7 +50,7 @@ const styles = {
   `,
 }
 
-function Header({ siteTitle }) {
+function Header() {
   const classes = useStyles()
   return (
     <header
@@ -92,14 +92,6 @@ function Header({ siteTitle }) {
       </div>
     </header>
   )
-}
-
-Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
-
-Header.defaultProps = {
-  siteTitle: ``,
 }
 
 export default Header
