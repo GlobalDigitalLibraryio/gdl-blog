@@ -1,8 +1,6 @@
 module.exports = {
   siteMetadata: {
     title: "Global digital library",
-    description: "ndifs",
-    author: "gdhfisuj",
   },
   plugins: [
     `gatsby-plugin-catch-links`,

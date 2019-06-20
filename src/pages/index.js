@@ -1,84 +1,60 @@
 import React from "react"
 import Layout from "../components/layout"
-import Dropdowns from "../components/dropdowns"
+import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import "../styles/layout-overide.css"
 import { graphql } from "gatsby"
+import BlogNav from "../components/blogNavigation"
+import Hidden from "@material-ui/core/Hidden"
 
-export function MakeFlatCategoireList(categories2d) {
-  const flatcat = []
-  var catlist
-  for (catlist in categories2d) {
-    var cat
-    for (cat in categories2d[catlist]) {
-      if (!flatcat.includes(categories2d[catlist][cat])) {
-        flatcat.push(categories2d[catlist][cat])
-      }
-    }
-  }
-  return flatcat
-}
-
-export function findMonthsAndYearsOfPosts(dates) {
-  const monthYears = []
-  var i
-  for (i in dates) {
-    var exactDate = dates[i].split(" ")
-    const monthYear = exactDate[0] + " " + exactDate[2]
-    if (!monthYears.includes(monthYear)) monthYears.push(monthYear)
-  }
-  return monthYears
-}
-
-export function fiveRecentPosts(title) {
-  const recentTitles = []
-  var i
-  for (i in title) {
-    if (i > 5) return
-    else recentTitles.push(title[i])
-  }
-  return recentTitles
-}
+const useStyles = makeStyles(theme => ({
+  mainGrid: {
+    margin: theme.spacing(3),
+  },
+  sidebarSection: {
+    marginTop: theme.spacing(3),
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  blogPost: {
+    width: "70%",
+  },
+}))
 
 export default function bp({ data }) {
-  const categories2d = []
-  const dates = []
-  const titles = []
-  data.allMarkdownRemark.edges.map(node => {
-    categories2d.push(node.node.frontmatter.categories)
-    dates.push(node.node.frontmatter.date)
-    titles.push(node.node.frontmatter.title)
-  })
-  const archives = findMonthsAndYearsOfPosts(dates)
-  const categories = MakeFlatCategoireList(categories2d)
-  const recentTitles = fiveRecentPosts(titles)
-
+  const classes = useStyles()
   const { edges: posts } = data.allMarkdownRemark
   return (
     <Layout>
-      <Helmet title="Global Digital Library - Blog" />{" "}
-      <Dropdowns>
-        {categories}
-        {archives}
-        {recentTitles}
-      </Dropdowns>
-      <div className="blog-posts">
-        {" "}
-        {posts.map(({ node: post }) => {
-          return (
-            <div className="blog-post-preview" key={post.id}>
-              {" "}
-              <h2>
+      <Helmet title="Global Digital Library - Blog" />
+      <div className={classes.row}>
+        {/*Main content */}
+        <div className={classes.blogPost}>
+          {" "}
+          {posts.map(({ node: post }) => {
+            return (
+              <div className="blog-post-preview" key={post.id}>
                 {" "}
-                <a href={post.frontmatter.title}>
-                  {post.frontmatter.title}
-                </a>{" "}
-              </h2>{" "}
-              <h3>{post.frontmatter.date}</h3> <p>{post.excerpt}</p>{" "}
-            </div>
-          )
-        })}{" "}
+                <h2>
+                  {" "}
+                  <a href={post.frontmatter.title}>
+                    {post.frontmatter.title}
+                  </a>{" "}
+                </h2>{" "}
+                <h3>{post.frontmatter.date}</h3> <p>{post.excerpt}</p>{" "}
+              </div>
+            )
+          })}{" "}
+        </div>
+        {/*end main content*/}
+
+        <Hidden smDown>
+          <BlogNav>{classes}</BlogNav>
+        </Hidden>
       </div>
     </Layout>
   )
