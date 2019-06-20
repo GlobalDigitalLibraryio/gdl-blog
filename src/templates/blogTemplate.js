@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-around",
   },
   blogPost: {
-    width: "70%",
+    width: "80%",
   },
 }))
 
@@ -35,7 +35,7 @@ export default function Template({ data }) {
         <Helmet title={post.frontmatter.title} />{" "}
         <div className={classes.blogPost}>
           {" "}
-          <h2>{post.frontmatter.title}</h2>{" "}
+          <h1>{post.frontmatter.title}</h1>{" "}
           <h4>
             {post.frontmatter.date} by {post.frontmatter.author}
           </h4>

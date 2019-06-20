@@ -2,8 +2,9 @@ import React from "react"
 import Layout from "../components/layout"
 import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
-import "../styles/blog-listings.css"
+
 import "../styles/layout-overide.css"
+import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
 import BlogNav from "../components/blogNavigation"
 import Hidden from "@material-ui/core/Hidden"
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
   },
   blogPost: {
-    width: "70%",
+    width: "80%",
   },
 }))
 
@@ -39,13 +40,14 @@ export default function bp({ data }) {
             return (
               <div className="blog-post-preview" key={post.id}>
                 {" "}
-                <h2>
+                <h1>
                   {" "}
                   <a href={post.frontmatter.title}>
                     {post.frontmatter.title}
                   </a>{" "}
-                </h2>{" "}
-                <h3>{post.frontmatter.date}</h3> <p>{post.excerpt}</p>{" "}
+                </h1>{" "}
+                <h3>{post.frontmatter.date}</h3>{" "}
+                <div dangerouslySetInnerHTML={{ __html: post.html }}></div>{" "}
               </div>
             )
           })}{" "}
@@ -64,13 +66,13 @@ export const pageQuery = graphql`
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
+          html
           excerpt(pruneLength: 250)
           id
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
             author
-            path
             categories
           }
         }

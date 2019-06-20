@@ -6,7 +6,6 @@ div.blog-post-preview {
   margin-bottom: 1rem;
 }
 h1 > * {
-  font-size: 1.2rem;
   text-decoration-line: none;
 }
 h4,
@@ -14,6 +13,11 @@ h3 {
   font-size: 0.8rem;
   font-weight: 100;
 }
+h1 {
+  font-weight: 100;
+  font-size: 1.62671rem;
+}
 h2 {
   font-weight: 100;
+  font-size: 1rem;
 }

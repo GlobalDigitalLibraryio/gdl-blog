@@ -11,8 +11,10 @@ import Button from "@material-ui/core/Button"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
-import MenuIcon from "@material-ui/icons/Menu"
 import Dropdown from "./dropdown"
+import drawerIcon from "../images/menuIcon.png"
+//import "../styles/header.css"
+
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
   ["Blog", "#"],
@@ -81,12 +83,12 @@ const useStyles = makeStyles(theme => ({
   },
   toolbarTitle: {
     flex: 1,
-    colorPrimary: "white",
   },
 
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0,
+    color: "white",
   },
   list: {
     width: 250,
@@ -95,7 +97,6 @@ const useStyles = makeStyles(theme => ({
     width: "auto",
   },
 }))
-
 const logoImg = classes => {
   return (
     <Typography
@@ -214,6 +215,10 @@ const toggleDrawer = (side, open, state, setState) => event => {
   setState({ ...state, [side]: open })
 }
 
+const smallImg = {
+  width: "50%",
+}
+
 function smalHeader(
   classes,
   state,
@@ -226,7 +231,7 @@ function smalHeader(
     <div>
       <Toolbar className={classes.toolbar}>
         <Button onClick={toggleDrawer("left", true, state, setState)}>
-          <MenuIcon />
+          <img src={drawerIcon} style={smallImg}></img>
         </Button>
         {logoImg(classes)}
         <SwipeableDrawer
@@ -275,6 +280,7 @@ function Header() {
             id="header"
             style={{
               background: `#0277BD`,
+              font: "112.5%/1.45em arial",
             }}
           >
             <div

@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-import "../components/layout.css"
+import "../styles/blog-posts.css"
 
 export default function Template({ data }) {
   const post = data.markdownRemark
