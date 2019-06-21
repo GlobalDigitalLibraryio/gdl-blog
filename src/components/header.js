@@ -13,10 +13,9 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import drawerIcon from "../images/menuIcon.png"
 import BlogNavHeader from "./blogNavHeader"
-
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
-  ["Blog", "#"],
+  ["Blog", "/"],
   ["About", "https://home.digitallibrary.io/about/"],
   ["Contact", "https://home.digitallibrary.io/contact/"],
   ["GDL in the news", "https://home.digitallibrary.io/gdl-in-the-news/"],
@@ -137,47 +136,26 @@ function Header() {
   })
   const classes = useStyles()
   return (
-    <StaticQuery
-      query={dropdownQuery}
-      render={data => (
-        <>
-          <header
-            id="header"
-            style={{
-              background: `#0277BD`,
-              font: "112.5%/1.45em arial",
-            }}
-          >
-            <div
-              style={{
-                margin: `0 auto`,
-                maxWidth: 960,
-              }}
-            >
-              <Hidden mdUp>{smalHeader(classes, state, setState)}</Hidden>
-              <Hidden smDown>{bigHeader(classes)}</Hidden>
-            </div>
-          </header>
-        </>
-      )}
-    />
+    <>
+      <header
+        id="header"
+        style={{
+          background: `#0277BD`,
+          font: "112.5%/1.45em arial",
+        }}
+      >
+        <div
+          style={{
+            margin: `0 auto`,
+            maxWidth: 960,
+          }}
+        >
+          <Hidden mdUp>{smalHeader(classes, state, setState)}</Hidden>
+          <Hidden smDown>{bigHeader(classes)}</Hidden>
+        </div>
+      </header>
+    </>
   )
 }
-
-const dropdownQuery = graphql`
-  query {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-      edges {
-        node {
-          frontmatter {
-            categories
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
-        }
-      }
-    }
-  }
-`
 
 export default Header

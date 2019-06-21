@@ -34,13 +34,11 @@ export default function bp({ data }) {
       <div className={classes.row}>
         {/*Main content */}
         <div className={classes.blogPost}>
-          {" "}
           {posts.map(({ node: post }) => {
             return (
               <div className="blog-post-preview" key={post.id}>
                 {" "}
                 <h1>
-                  {" "}
                   <a href={kebabCase(post.frontmatter.title)}>
                     {post.frontmatter.title}
                   </a>{" "}

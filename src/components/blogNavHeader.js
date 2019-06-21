@@ -1,10 +1,11 @@
 import React from "react"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
-import Dropdown from "./dropdown"
+import SubMenu from "./subMenu"
 import { StaticQuery } from "gatsby"
 import { kebabCase } from "./kebabCase"
 
+import ListItemText from "@material-ui/core/ListItemText"
 const months = [
   "January",
   "February",
@@ -97,22 +98,45 @@ function pushToLists(data) {
     })
   }
 }
-/*
-var recentPosts
-var recentPostsLink
-var categoriesList
-var categoryLinks
-var archive
-var archiveLinks
 
+const hidden = {
+  display: "none",
+}
+const notHidden = {
+  display: "block",
+  paddingLeft: "10px",
+}
 
-{(recentPosts = fiveRecentPosts(titles))}
-{(recentPostsLink = getRecentPostLink(recentPosts))}
-{(categoriesList = MakeFlatCategoireList(categories2d))}
-{(categoryLinks = getCatLink(categoriesList))}
-{(archive = findMonthsAndYearsOfPosts(dates))}
-{(archiveLinks = getArchiveLinks(archive))}
-*/
+var isHidden1 = hidden
+var isHidden2 = hidden
+var isHidden3 = hidden
+
+function toggleHidden(i) {
+  if (i === 1) {
+    if (isHidden1 === hidden) {
+      isHidden1 = notHidden
+    } else {
+      isHidden1 = hidden
+    }
+  } else if (i === 2) {
+    if (isHidden2 === hidden) {
+      isHidden2 = notHidden
+    } else {
+      isHidden2 = hidden
+    }
+  } else if (i === 3) {
+    if (isHidden3 === hidden) {
+      isHidden3 = notHidden
+    } else {
+      isHidden3 = hidden
+    }
+  }
+}
+const colStyle = {
+  display: "flex",
+  flexDirection: "column",
+}
+
 function BlogNavHeader() {
   return (
     <StaticQuery
@@ -122,25 +146,48 @@ function BlogNavHeader() {
           <List>
             {pushToLists(data)}
             <ListItem button key="Recent">
-              <Dropdown>
-                Recent Posts
-                {fiveRecentPosts(titles)}
-                {getRecentPostLink(fiveRecentPosts(titles))}
-              </Dropdown>
+              <div style={colStyle}>
+                <div id="1" onClick={() => toggleHidden(1)}>
+                  <ListItemText>Recent Posts</ListItemText>
+                </div>
+
+                <div style={isHidden1}>
+                  <SubMenu style={isHidden1}>
+                    {fiveRecentPosts(titles)}
+                    {getRecentPostLink(fiveRecentPosts(titles))}
+                  </SubMenu>
+                </div>
+              </div>
             </ListItem>
-            <ListItem button key="Categories" href="/categories">
-              <Dropdown>
-                Categories
-                {MakeFlatCategoireList(categories2d)}
-                {getCatLink(MakeFlatCategoireList(categories2d))}
-              </Dropdown>
+
+            <ListItem button key="Categories">
+              <div style={colStyle}>
+                <div id="2" onClick={() => toggleHidden(2)}>
+                  <ListItemText>Categories</ListItemText>
+                </div>
+
+                <div style={isHidden2}>
+                  <SubMenu>
+                    {MakeFlatCategoireList(categories2d)}
+                    {getCatLink(MakeFlatCategoireList(categories2d))}
+                  </SubMenu>
+                </div>
+              </div>
             </ListItem>
+
             <ListItem button key="Archive">
-              <Dropdown>
-                Archive
-                {findMonthsAndYearsOfPosts(dates)}
-                {getArchiveLinks(findMonthsAndYearsOfPosts(dates))}
-              </Dropdown>
+              <div style={colStyle}>
+                <div id="3" onClick={() => toggleHidden(3)}>
+                  <ListItemText>Archive</ListItemText>
+                </div>
+
+                <div style={isHidden3}>
+                  <SubMenu>
+                    {findMonthsAndYearsOfPosts(dates)}
+                    {getArchiveLinks(findMonthsAndYearsOfPosts(dates))}
+                  </SubMenu>
+                </div>
+              </div>
             </ListItem>
           </List>
         </>
