@@ -50,7 +50,7 @@ const logoImg = classes => {
       className={classes.toolbarTitle}
     >
       <Link to="/" aria-label="Global Digital Library">
-        <img src={gdlLogo} aria-hidden alt="logo" />
+        <img src={gdlLogo} aria-hidden alt="logo" alt="gdlLogo" />
       </Link>
     </Typography>
   )
@@ -116,7 +116,7 @@ function smalHeader(classes, state, setState) {
     <div>
       <Toolbar className={classes.toolbar}>
         <Button onClick={toggleDrawer("left", true, state, setState)}>
-          <img src={drawerIcon} style={smallImg}></img>
+          <img src={drawerIcon} alt="draweIcon" style={smallImg}></img>
         </Button>
         {logoImg(classes)}
         <SwipeableDrawer

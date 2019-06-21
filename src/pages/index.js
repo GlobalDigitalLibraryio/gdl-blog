@@ -8,6 +8,7 @@ import { graphql } from "gatsby"
 import BlogNav from "../components/blogNavigation"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
+
 const useStyles = makeStyles(theme => ({
   mainGrid: {
     margin: theme.spacing(3),
