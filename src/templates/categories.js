@@ -4,7 +4,7 @@ import Layout from "../components/layout"
 import BlogNav from "../components/blogNavigation"
 import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
-import { fontWeight } from "@material-ui/system"
+import { kebabCase } from "../components/kebabCase"
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -49,7 +49,7 @@ const Tags = ({ pageContext, data }) => {
             {edges.map(({ node }) => {
               const { title, date } = node.frontmatter
               const { excerpt } = node
-              const pageLink = "/" + title + "/"
+              const pageLink = "/" + kebabCase(title) + "/"
               return (
                 <div className="blog-posts" key={title}>
                   {" "}

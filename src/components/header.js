@@ -11,9 +11,8 @@ import Button from "@material-ui/core/Button"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
-import Dropdown from "./dropdown"
 import drawerIcon from "../images/menuIcon.png"
-//import "../styles/header.css"
+import BlogNavHeader from "./blogNavHeader"
 
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
@@ -23,60 +22,6 @@ const menuItmens = [
   ["GDL in the news", "https://home.digitallibrary.io/gdl-in-the-news/"],
 ]
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]
-
-export function MakeFlatCategoireList(categories2d) {
-  const flatcat = []
-  var catlist
-  for (catlist in categories2d) {
-    var cat
-    for (cat in categories2d[catlist]) {
-      if (!flatcat.includes(categories2d[catlist][cat])) {
-        flatcat.push(categories2d[catlist][cat])
-      }
-    }
-  }
-  return flatcat
-}
-
-export function findMonthsAndYearsOfPosts(dates) {
-  const monthYears = []
-  var i
-  for (i in dates) {
-    var exactDate = dates[i].split(" ")
-    const monthYear = exactDate[0] + " " + exactDate[2]
-    if (!monthYears.includes(monthYear)) monthYears.push(monthYear)
-  }
-  return monthYears
-}
-
-export function fiveRecentPosts(title) {
-  const recentTitles = []
-  var i
-  for (i in title) {
-    if (i >= 5) return recentTitles
-    else recentTitles.push(title[i])
-  }
-  return recentTitles
-}
-
-const categories2d = []
-const dates = []
-const titles = []
-
 const useStyles = makeStyles(theme => ({
   toolbar: {
     borderBottom: "1px solid ${theme.palette.divider}",
@@ -84,7 +29,6 @@ const useStyles = makeStyles(theme => ({
   toolbarTitle: {
     flex: 1,
   },
-
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0,
@@ -130,38 +74,8 @@ const bigHeader = classes => {
     </Toolbar>
   )
 }
-function getArchiveLinks(archive) {
-  const archiveLinks = []
-  var i
-  for (i in archive) {
-    let a = archive[i].split(" ")
-    let month = months.indexOf(a[0]) + 1
-    if (month < 10) month = "0" + month
-    archiveLinks.push(a[1] + "/" + month)
-  }
-  return archiveLinks
-}
 
-function getCatLink(categories) {
-  const categoryLinks = []
-  var j
-  for (j in categories) {
-    categoryLinks.push(
-      "category/" + categories[j].replace(/\s+/g, "-").toLowerCase()
-    )
-  }
-  return categoryLinks
-}
-
-const sideList = (
-  side,
-  classes,
-  state,
-  setState,
-  categories,
-  archive,
-  recentPosts
-) => (
+const sideList = (side, classes, state, setState) => (
   <div
     className={classes.list}
     role="presentation"
@@ -178,29 +92,7 @@ const sideList = (
       ))}
     </List>
     <Divider />
-    <List>
-      <ListItem button key="Recent">
-        <Dropdown>
-          Recent Posts
-          {recentPosts}
-          {recentPosts}
-        </Dropdown>
-      </ListItem>
-      <ListItem button key="Categories" href="/categories">
-        <Dropdown>
-          Categories
-          {categories}
-          {getCatLink(categories)}
-        </Dropdown>
-      </ListItem>
-      <ListItem button key="Archive">
-        <Dropdown>
-          Archive
-          {archive}
-          {getArchiveLinks(archive)}
-        </Dropdown>
-      </ListItem>
-    </List>
+    <BlogNavHeader />
   </div>
 )
 
@@ -219,14 +111,7 @@ const smallImg = {
   width: "50%",
 }
 
-function smalHeader(
-  classes,
-  state,
-  setState,
-  categories,
-  archive,
-  recentPosts
-) {
+function smalHeader(classes, state, setState) {
   return (
     <div>
       <Toolbar className={classes.toolbar}>
@@ -239,43 +124,23 @@ function smalHeader(
           onClose={toggleDrawer("left", false, state, setState)}
           onOpen={toggleDrawer("left", true, state, setState)}
         >
-          {sideList(
-            " ",
-            classes,
-            state,
-            setState,
-            categories,
-            archive,
-            recentPosts
-          )}
+          {sideList(" ", classes, state, setState)}
         </SwipeableDrawer>
       </Toolbar>
     </div>
   )
 }
 
-function pushToLists(data) {
-  if (titles.length === 0) {
-    data.allMarkdownRemark.edges.map(node => {
-      categories2d.push(node.node.frontmatter.categories)
-      dates.push(node.node.frontmatter.date)
-      titles.push(node.node.frontmatter.title)
-    })
-  }
-}
-
 function Header() {
-  const classes = useStyles()
   const [state, setState] = React.useState({
     left: false,
   })
+  const classes = useStyles()
   return (
     <StaticQuery
       query={dropdownQuery}
       render={data => (
         <>
-          {pushToLists(data)}
-
           <header
             id="header"
             style={{
@@ -289,16 +154,7 @@ function Header() {
                 maxWidth: 960,
               }}
             >
-              <Hidden mdUp>
-                {smalHeader(
-                  classes,
-                  state,
-                  setState,
-                  MakeFlatCategoireList(categories2d),
-                  findMonthsAndYearsOfPosts(dates),
-                  fiveRecentPosts(titles)
-                )}
-              </Hidden>
+              <Hidden mdUp>{smalHeader(classes, state, setState)}</Hidden>
               <Hidden smDown>{bigHeader(classes)}</Hidden>
             </div>
           </header>

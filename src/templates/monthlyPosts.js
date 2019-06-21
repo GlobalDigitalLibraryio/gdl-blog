@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import BlogNav from "../components/blogNavigation"
 import Hidden from "@material-ui/core/Hidden"
+import { kebabCase } from "../components/kebabCase"
 
 const months = [
   "January",
@@ -70,7 +71,7 @@ export default function Template({ pageContext, data }) {
             const { slug } = node.fields
             const { title, date } = node.frontmatter
             const { excerpt } = node
-            const pageLink = "/" + title + "/"
+            const pageLink = "/" + kebabCase(title) + "/"
             return (
               <div className="blog-posts" key={slug}>
                 {" "}

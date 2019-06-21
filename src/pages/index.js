@@ -2,13 +2,12 @@ import React from "react"
 import Layout from "../components/layout"
 import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
-
 import "../styles/layout-overide.css"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
 import BlogNav from "../components/blogNavigation"
 import Hidden from "@material-ui/core/Hidden"
-
+import { kebabCase } from "../components/kebabCase"
 const useStyles = makeStyles(theme => ({
   mainGrid: {
     margin: theme.spacing(3),
@@ -25,10 +24,9 @@ const useStyles = makeStyles(theme => ({
     width: "80%",
   },
 }))
-
 export default function bp({ data }) {
-  const classes = useStyles()
   const { edges: posts } = data.allMarkdownRemark
+  const classes = useStyles()
   return (
     <Layout>
       <Helmet title="Global Digital Library - Blog" />
@@ -42,12 +40,13 @@ export default function bp({ data }) {
                 {" "}
                 <h1>
                   {" "}
-                  <a href={post.frontmatter.title}>
+                  <a href={kebabCase(post.frontmatter.title)}>
                     {post.frontmatter.title}
                   </a>{" "}
                 </h1>{" "}
                 <h3>{post.frontmatter.date}</h3>{" "}
-                <div dangerouslySetInnerHTML={{ __html: post.html }}></div>{" "}
+                {/*<div dangerouslySetInnerHTML={{ __html: post.html }}></div>{" "} */}
+                {post.excerpt}
               </div>
             )
           })}{" "}

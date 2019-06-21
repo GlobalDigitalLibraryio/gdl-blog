@@ -1,13 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-// Utilities
-import kebabCase from "lodash/kebabCase"
-
 // Components
 import { Helmet } from "react-helmet"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
+import { kebabCase } from "../components/kebabCase"
 import "../styles/blog-listings.css"
 import "../styles/layout-overide.css"
 

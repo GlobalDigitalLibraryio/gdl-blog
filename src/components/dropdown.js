@@ -19,8 +19,9 @@ export default function Dropdown({ children }) {
   const list = children[1]
 
   function getLink(listItem) {
-    if (children.length > 2) return children[2][list.indexOf(listItem)]
-    else return listItem
+    if (children.length > 2) {
+      return children[2][list.indexOf(listItem)]
+    } else return listItem
   }
   return (
     <div>
