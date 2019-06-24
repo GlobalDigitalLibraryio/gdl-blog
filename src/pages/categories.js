@@ -7,7 +7,6 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import { kebabCase } from "../components/kebabCase"
 import "../styles/blog-listings.css"
-import "../styles/layout-overide.css"
 
 function TagsPage({
   data: {

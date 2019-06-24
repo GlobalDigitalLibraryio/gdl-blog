@@ -91,7 +91,7 @@ function getRecentPostLink(posts) {
 
 function pushToLists(data) {
   if (titles.length === 0) {
-    data.allMarkdownRemark.edges.map(node => {
+    data.allMarkdownRemark.edges.forEach(node => {
       categories2d.push(node.node.frontmatter.categories)
       dates.push(node.node.frontmatter.date)
       titles.push(node.node.frontmatter.title)

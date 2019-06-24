@@ -2,7 +2,6 @@ import React from "react"
 import { StaticQuery } from "gatsby"
 import Grid from "@material-ui/core/Grid"
 import "../styles/blog-listings.css"
-import "../styles/layout-overide.css"
 import { graphql } from "gatsby"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
@@ -43,7 +42,7 @@ function archiveLinks(archiveDate) {
 
 const pushToLists = data => {
   if (categories2d.length === 0) {
-    data.allMarkdownRemark.edges.map(node => {
+    data.allMarkdownRemark.edges.forEach(node => {
       categories2d.push(node.node.frontmatter.categories)
       dates.push(node.node.frontmatter.date)
       titles.push(node.node.frontmatter.title)

@@ -1,4 +1,4 @@
-import { Link, StaticQuery } from "gatsby"
+import { Link } from "gatsby"
 import React from "react"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
@@ -13,6 +13,7 @@ import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import drawerIcon from "../images/menuIcon.png"
 import BlogNavHeader from "./blogNavHeader"
+
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
   ["Blog", "/"],
@@ -23,7 +24,7 @@ const menuItmens = [
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
-    borderBottom: "1px solid ${theme.palette.divider}",
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   toolbarTitle: {
     flex: 1,
@@ -32,6 +33,14 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     flexShrink: 0,
     color: "white",
+    fontSize: "20px",
+  },
+  toolbarLinkActive: {
+    padding: theme.spacing(1),
+    flexShrink: 0,
+    color: "white",
+    fontSize: "20px",
+    textDecoration: "underline",
   },
   list: {
     width: 250,
@@ -49,26 +58,41 @@ const logoImg = classes => {
       className={classes.toolbarTitle}
     >
       <Link to="/" aria-label="Global Digital Library">
-        <img src={gdlLogo} aria-hidden alt="logo" alt="gdlLogo" />
+        <img src={gdlLogo} aria-hidden alt="gdlLogo" />
       </Link>
     </Typography>
   )
 }
-
+function createMenuItem(menuItem, classes) {
+  if (menuItem[1] === "/") {
+    return (
+      <a
+        key={menuItem[0]}
+        variant="body2"
+        href={menuItem[1]}
+        className={classes.toolbarLinkActive}
+      >
+        {menuItem[0]}
+      </a>
+    )
+  } else {
+    return (
+      <a
+        key={menuItem[0]}
+        variant="body2"
+        href={menuItem[1]}
+        className={classes.toolbarLink}
+      >
+        {menuItem[0]}
+      </a>
+    )
+  }
+}
 const bigHeader = classes => {
   return (
     <Toolbar className={classes.toolbar}>
       {logoImg(classes)}
-      {menuItmens.map(menuItem => (
-        <a
-          key={menuItem[0]}
-          variant="body2"
-          href={menuItem[1]}
-          className={classes.toolbarLink}
-        >
-          {menuItem[0]}
-        </a>
-      ))}
+      {menuItmens.map(menuItem => createMenuItem(menuItem, classes))}
       <Divider />
     </Toolbar>
   )

@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider"
 import BlogNav from "../components/blogNavigation"
 import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
+import rehypeReact from "rehype-react"
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -24,6 +25,28 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
+const vid = link => {
+  return (
+    <div className="vidContainer">
+      <iframe
+        className="video"
+        src={link.children[0].replace("watch?v=", "embed/")}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="noe her"
+      />
+    </div>
+  )
+}
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+  components: {
+    video: vid,
+  },
+}).Compiler
+
 export default function Template({ data }) {
   const classes = useStyles()
   const post = data.markdownRemark
@@ -39,10 +62,8 @@ export default function Template({ data }) {
           <h4>
             {post.frontmatter.date} by {post.frontmatter.author}
           </h4>
-          <div
-            className="blog-post-content"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />{" "}
+          <div className="blog-post-content" />
+          <div>{renderAst(post.htmlAst)}</div>
           <div>
             <b>posted in:</b>
             {post.frontmatter.categories.map(category => {
@@ -61,9 +82,8 @@ export default function Template({ data }) {
                     "/category/" + category.replace(/\s+/g, "-").toLowerCase()
                   }
                 >
-                  {" "}
                   {category}
-                  {maybeComma()}{" "}
+                  {maybeComma()}
                 </a>
               )
             })}
@@ -80,19 +100,9 @@ export default function Template({ data }) {
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
-      edges {
-        node {
-          frontmatter {
-            categories
-            date(formatString: "MMMM DD, YYYY")
-            title
-          }
-        }
-      }
-    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
+      htmlAst
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title

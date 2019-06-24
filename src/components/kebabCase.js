@@ -1,5 +1,3 @@
-import React from "react"
-
 export function kebabCase(string) {
   let str = string.toString()
   str = str.replace(/\s/g, "-")

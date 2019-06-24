@@ -3,15 +3,12 @@ div.blog-post-preview {
   border-bottom: 2px solid #e6e6e6;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
 }
-h1 > * {
-  text-decoration-line: none;
-}
+
 h4,
 h3 {
-  font-size: 0.8rem;
-  font-weight: 100;
+  font-size: 1rem;
+  font-weight: 200;
 }
 h1 {
   font-weight: 100;
@@ -19,5 +16,9 @@ h1 {
 }
 h2 {
   font-weight: 100;
-  font-size: 1rem;
+  font-size: 1.3rem;
+}
+* {
+  color: black;
+  text-decoration-line: none;
 }
