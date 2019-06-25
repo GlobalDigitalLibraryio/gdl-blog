@@ -11,9 +11,8 @@ import Button from "@material-ui/core/Button"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
-import drawerIcon from "../images/menuIcon.png"
 import BlogNavHeader from "./blogNavHeader"
-
+import "../styles/blog-listings.css"
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
   ["Blog", "/"],
@@ -45,9 +44,6 @@ const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
   },
-  fullList: {
-    width: "auto",
-  },
 }))
 const logoImg = classes => {
   return (
@@ -64,29 +60,20 @@ const logoImg = classes => {
   )
 }
 function createMenuItem(menuItem, classes) {
+  let mayBeActive = classes.toolbarLink
   if (menuItem[1] === "/") {
-    return (
-      <a
-        key={menuItem[0]}
-        variant="body2"
-        href={menuItem[1]}
-        className={classes.toolbarLinkActive}
-      >
-        {menuItem[0]}
-      </a>
-    )
-  } else {
-    return (
-      <a
-        key={menuItem[0]}
-        variant="body2"
-        href={menuItem[1]}
-        className={classes.toolbarLink}
-      >
-        {menuItem[0]}
-      </a>
-    )
+    mayBeActive = classes.toolbarLinkActive
   }
+  return (
+    <a
+      key={menuItem[0]}
+      variant="body2"
+      href={menuItem[1]}
+      className={mayBeActive}
+    >
+      {menuItem[0]}
+    </a>
+  )
 }
 const bigHeader = classes => {
   return (
@@ -101,7 +88,6 @@ const bigHeader = classes => {
 const sideList = (side, classes, state, setState) => (
   <div
     className={classes.list}
-    role="presentation"
     onClick={toggleDrawer(side, false, state, setState)}
     onKeyDown={toggleDrawer(side, false, state, setState)}
   >
@@ -130,16 +116,16 @@ const toggleDrawer = (side, open, state, setState) => event => {
   setState({ ...state, [side]: open })
 }
 
-const smallImg = {
-  width: "50%",
-}
-
 function smalHeader(classes, state, setState) {
   return (
     <div>
       <Toolbar className={classes.toolbar}>
         <Button onClick={toggleDrawer("left", true, state, setState)}>
-          <img src={drawerIcon} alt="draweIcon" style={smallImg}></img>
+          <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+          ></link>
+          <i className="material-icons md-light">menu</i>
         </Button>
         {logoImg(classes)}
         <SwipeableDrawer

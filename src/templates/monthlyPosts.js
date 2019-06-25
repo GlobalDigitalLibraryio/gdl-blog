@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
-import BlogNav from "../components/blogNavigation"
+import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 

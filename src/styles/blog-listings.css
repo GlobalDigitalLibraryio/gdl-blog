@@ -22,3 +22,10 @@ h2 {
   color: black;
   text-decoration-line: none;
 }
+#unavailable {
+  color: lightgray !important;
+}
+
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 1);
+}

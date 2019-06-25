@@ -1,5 +1,4 @@
 ---
-path: "post5"
 date: "2019-06-30"
 author: "Camilla"
 title: "Hverdagen som sommerjobber i Knowit!"

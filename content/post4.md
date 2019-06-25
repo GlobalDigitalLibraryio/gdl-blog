@@ -1,5 +1,4 @@
 ---
-path: "post4"
 date: "2019-06-17"
 author: "Sunniva"
 title: "User Testing"

@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
-import BlogNav from "../components/blogNavigation"
+import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 import { renderAst } from "../templates/blogTemplate"
@@ -28,73 +28,95 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
   },
 }))
-const SIDES_PER_PAGE = 5
+
+// Variables used to navigate between sides of posts
+const SIDES_PER_PAGE = 3
 var allPosts = []
 var sliceFrom = 0
 var sliceTo = SIDES_PER_PAGE
-var getAllPostsOnlyOnce = 0
 
+var getAllPostsOnlyOnce = 0
 function getAll(posts) {
+  //We dont want to get all posts every time we render the page
   if (getAllPostsOnlyOnce !== 0) return
   getAllPostsOnlyOnce += 1
+  //for every post we create a layout
   posts.forEach(({ node: post }) => {
     allPosts.push(
       <div className="blog-post-preview" key={post.id}>
-        {" "}
         <h1>
           <a href={kebabCase(post.frontmatter.title)}>
             {post.frontmatter.title}
-          </a>{" "}
-        </h1>{" "}
+          </a>
+        </h1>
         <h3>{post.frontmatter.date}</h3> <div>{renderAst(post.htmlAst)}</div>
       </div>
     )
   })
 }
+
+/** We get the posts we want to show on the index page */
 function getSelectedPosts() {
   return allPosts.slice(sliceFrom, sliceTo)
 }
+
+/** When we want to see older posts we upate the variables that controls which posts are visible */
 function getOlderPosts() {
-  sliceFrom = sliceTo
-  sliceTo = Math.min(sliceTo + SIDES_PER_PAGE, allPosts.length)
+  if (sliceTo >= allPosts.length) return
+  else {
+    sliceFrom = sliceTo
+    sliceTo = Math.min(sliceTo + SIDES_PER_PAGE, allPosts.length)
+  }
 }
+
+/** When we want to see newer posts we upate the variables that controls which posts are visible */
 function getNewerPosts() {
-  sliceTo = sliceFrom
-  sliceFrom = Math.max(sliceTo - SIDES_PER_PAGE, 0)
+  if (sliceFrom <= 0) return
+  else {
+    sliceTo = sliceFrom
+    sliceFrom = Math.max(sliceTo - SIDES_PER_PAGE, 0)
+  }
 }
 
+/** sets the style of older-button if its no older posts */
 function olderButtonVisible() {
-  if (sliceTo >= allPosts.length) return ""
-  else {
-    return (
-      <a href="/">
-        <div className="arrow arrow--right" onClick={() => getOlderPosts()}>
-          <b> Older posts</b>
-        </div>
-      </a>
-    )
+  var style
+  if (sliceTo >= allPosts.length) {
+    style = "unavailable"
   }
+  return (
+    <a href="/">
+      <div onClick={() => getOlderPosts()}>
+        <b id={style}> Older posts</b>
+      </div>
+    </a>
+  )
 }
+/** sets the style of newer-button if its no newer posts */
 function newerButtonVisible() {
-  if (sliceFrom <= 0) return ""
-  else {
-    return (
-      <a href="/">
-        <div className="arrow arrow--left" onClick={() => getNewerPosts()}>
-          <b>Newer posts </b>
-        </div>
-      </a>
-    )
+  var style
+  if (sliceFrom <= 0) {
+    style = "unavailable"
   }
+  return (
+    <a href="/">
+      <div onClick={() => getNewerPosts()}>
+        <b id={style}>Newer posts </b>
+      </div>
+    </a>
+  )
 }
 
-function navigationArrows() {
+function navigationControlers() {
   return (
     <>
-      {newerButtonVisible()}
-      {Math.ceil(sliceTo / SIDES_PER_PAGE)} /{" "}
-      {Math.ceil(allPosts.length / SIDES_PER_PAGE)}
-      {olderButtonVisible()}
+      <div>{newerButtonVisible()}</div>
+      <div>
+        {/*Shows which page we´re on and when  */}
+        {Math.ceil(sliceTo / SIDES_PER_PAGE)} /{" "}
+        {Math.ceil(allPosts.length / SIDES_PER_PAGE)}
+      </div>
+      <div>{olderButtonVisible()}</div>
     </>
   )
 }
@@ -109,7 +131,7 @@ export default function bp({ data }) {
       <div className={classes.row}>
         {/*Main content */}
         <div className={classes.blogPost}>
-          <div className={classes.row}>{navigationArrows()}</div>
+          <div className={classes.row}>{navigationControlers()}</div>
           <div>{getSelectedPosts()}</div>
         </div>
         {/*end main content*/}
@@ -132,7 +154,6 @@ export const pageQuery = graphql`
             title
             date(formatString: "MMMM DD, YYYY")
             author
-            categories
           }
         }
       }

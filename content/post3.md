@@ -1,5 +1,4 @@
 ---
-path: "post3"
 date: "2019-05-31"
 author: "Tom"
 title: "New feature!"
