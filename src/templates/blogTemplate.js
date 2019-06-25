@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const vid = link => {
+export const videoTag = link => {
   return (
     <div className="vidContainer">
       <iframe
@@ -40,16 +40,39 @@ const vid = link => {
   )
 }
 
-const renderAst = new rehypeReact({
+export const renderAst = new rehypeReact({
   createElement: React.createElement,
   components: {
-    video: vid,
+    video: videoTag,
   },
 }).Compiler
+
+function maybeComma(cats, cat) {
+  if (!cats.indexOf(cat) + 1 === cats.length) {
+    return ","
+  }
+}
+
+function getCategoryString(cats) {
+  var categories = []
+  cats.forEach(category => {
+    categories.push(
+      <a
+        key={category}
+        href={"/category/" + category.replace(/\s+/g, "-").toLowerCase()}
+      >
+        {category}
+        {maybeComma(cats, category)}{" "}
+      </a>
+    )
+  })
+  return categories
+}
 
 export default function Template({ data }) {
   const classes = useStyles()
   const post = data.markdownRemark
+  const categorySting = getCategoryString(post.frontmatter.categories)
 
   return (
     <Layout className="blog-post-container">
@@ -66,27 +89,7 @@ export default function Template({ data }) {
           <div>{renderAst(post.htmlAst)}</div>
           <div>
             <b>posted in:</b>
-            {post.frontmatter.categories.map(category => {
-              function maybeComma() {
-                if (
-                  !post.frontmatter.categories.indexOf(category) + 1 ===
-                  post.frontmatter.categories.length
-                ) {
-                  return ","
-                }
-              }
-              return (
-                <a
-                  key={category}
-                  href={
-                    "/category/" + category.replace(/\s+/g, "-").toLowerCase()
-                  }
-                >
-                  {category}
-                  {maybeComma()}
-                </a>
-              )
-            })}
+            {categorySting}
           </div>
           <Divider></Divider>
         </div>{" "}
