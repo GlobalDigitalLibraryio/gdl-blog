@@ -1,18 +1,20 @@
-import { Link } from "gatsby"
 import React from "react"
-import Typography from "@material-ui/core/Typography"
-import { makeStyles } from "@material-ui/core/styles"
-import Divider from "@material-ui/core/Divider"
-import Toolbar from "@material-ui/core/Toolbar"
+import { AppBar, Hidden } from "@material-ui/core"
+import { Link } from "gatsby"
 import gdlLogo from "../images/gdl-logo.svg"
-import Hidden from "@material-ui/core/Hidden"
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
+import { makeStyles } from "@material-ui/core/styles"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import Divider from "@material-ui/core/Divider"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import BlogNavHeader from "./blogNavHeader"
-import "../styles/blog-listings.css"
+
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
 const menuItmens = [
   ["Home", "https://home.digitallibrary.io/about/"],
   ["Blog", "/"],
@@ -21,81 +23,35 @@ const menuItmens = [
   ["GDL in the news", "https://home.digitallibrary.io/gdl-in-the-news/"],
 ]
 
-const useStyles = makeStyles(theme => ({
-  toolbar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbarTitle: {
-    flex: 1,
-  },
-  toolbarLink: {
-    padding: theme.spacing(1),
-    flexShrink: 0,
-    color: "white",
-    fontSize: "20px",
-  },
-  toolbarLinkActive: {
-    padding: theme.spacing(1),
-    flexShrink: 0,
-    color: "white",
-    fontSize: "20px",
-    textDecoration: "underline",
-  },
-  list: {
-    width: 250,
-  },
-}))
-const logoImg = classes => {
-  return (
-    <Typography
-      component="h2"
-      variant="h5"
-      align="left"
-      className={classes.toolbarTitle}
-    >
-      <Link to="/" aria-label="Global Digital Library">
-        <img src={gdlLogo} aria-hidden alt="gdlLogo" />
-      </Link>
-    </Typography>
-  )
-}
-function createMenuItem(menuItem, classes) {
-  let mayBeActive = classes.toolbarLink
-  if (menuItem[1] === "/") {
-    mayBeActive = classes.toolbarLinkActive
-  }
-  return (
-    <a
-      key={menuItem[0]}
-      variant="body2"
-      href={menuItem[1]}
-      className={mayBeActive}
-    >
-      {menuItem[0]}
-    </a>
-  )
-}
-const bigHeader = classes => {
-  return (
-    <Toolbar className={classes.toolbar}>
-      {logoImg(classes)}
-      {menuItmens.map(menuItem => createMenuItem(menuItem, classes))}
-      <Divider />
-    </Toolbar>
-  )
+const menuItemStyle = {
+  padding: "8px",
+  flexshrink: 0,
+  color: "white",
+  fontSizze: "20px",
 }
 
-const sideList = (side, classes, state, setState) => (
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}))
+const sideList = (side, state, setState) => (
   <div
-    className={classes.list}
+    style={{ widh: 250 }}
     onClick={toggleDrawer(side, false, state, setState)}
     onKeyDown={toggleDrawer(side, false, state, setState)}
   >
     <List>
-      {menuItmens.map(text => (
+      {menuItmens.map((text, index) => (
         <ListItem button key={text[0]}>
           <a href={text[1]}>
-            <ListItemText primary={text[0]} />
+            <ListItemText id="menuItem" primary={text[0]} />
           </a>
         </ListItem>
       ))}
@@ -116,56 +72,49 @@ const toggleDrawer = (side, open, state, setState) => event => {
   setState({ ...state, [side]: open })
 }
 
-function smalHeader(classes, state, setState) {
-  return (
-    <div>
-      <Toolbar className={classes.toolbar}>
-        <Button onClick={toggleDrawer("left", true, state, setState)}>
-          <link
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
-          ></link>
-          <i className="material-icons md-light">menu</i>
-        </Button>
-        {logoImg(classes)}
-        <SwipeableDrawer
-          open={state.left}
-          onClose={toggleDrawer("left", false, state, setState)}
-          onOpen={toggleDrawer("left", true, state, setState)}
-        >
-          {sideList(" ", classes, state, setState)}
-        </SwipeableDrawer>
-      </Toolbar>
-    </div>
-  )
-}
-
-function Header() {
+export default function Header() {
+  const classes = useStyles()
   const [state, setState] = React.useState({
     left: false,
   })
-  const classes = useStyles()
+
   return (
-    <>
-      <header
-        id="header"
-        style={{
-          background: `#0277BD`,
-          font: "112.5%/1.45em arial",
-        }}
-      >
-        <div
-          style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-          }}
-        >
-          <Hidden mdUp>{smalHeader(classes, state, setState)}</Hidden>
-          <Hidden smDown>{bigHeader(classes)}</Hidden>
-        </div>
-      </header>
-    </>
+    <div className={classes.root}>
+      <AppBar position="static" style={{ backgroundColor: "#0277bd" }}>
+        <Toolbar>
+          <Hidden mdUp>
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Menu"
+              onClick={toggleDrawer("left", true, state, setState)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <SwipeableDrawer
+              open={state.left}
+              onClose={toggleDrawer("left", false, state, setState)}
+              onOpen={toggleDrawer("left", true, state, setState)}
+            >
+              {sideList(" ", state, setState)}
+            </SwipeableDrawer>
+          </Hidden>
+          <Typography variant="h6" className={classes.title}>
+            <Link to="/" aria-label="Global Digital Library">
+              <img src={gdlLogo} aria-hidden alt="logo" />
+            </Link>
+          </Typography>
+          <Hidden smDown>
+            {menuItmens.map((menuItem, index) => {
+              return (
+                <Button href={menuItem[1]} key={index} style={menuItemStyle}>
+                  {menuItem[0]}
+                </Button>
+              )
+            })}
+          </Hidden>
+        </Toolbar>
+      </AppBar>
+    </div>
   )
 }
-
-export default Header

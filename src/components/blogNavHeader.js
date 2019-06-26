@@ -19,7 +19,7 @@ const titles = []
 
 function getArchiveLinks(archive) {
   const archiveLinks = []
-  archive.forEach((arc, index) => {
+  archive.forEach(arc => {
     archiveLinks.push(getArchiveLink(arc))
   })
   return archiveLinks
@@ -47,6 +47,7 @@ const hidden = {
 const notHidden = {
   display: "block",
   paddingLeft: "10px",
+  maxWidth: "200px",
 }
 
 let isHidden1 = hidden

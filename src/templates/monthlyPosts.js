@@ -1,52 +1,32 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-]
-
-const useStyles = makeStyles(theme => ({
-  mainGrid: {
-    margin: theme.spacing(3),
-  },
-  sidebarSection: {
-    marginTop: theme.spacing(3),
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  blogPost: {
-    width: "70%",
-  },
-}))
 function niceDate(uglyDate) {
   let a = uglyDate.split("-")
   if (a.length === 1) return " the year " + a[0]
-  let month = months[a[1] - 1]
+  let month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ][a[1] - 1]
   return month + " " + a[0]
 }
 
 export default function Template({ pageContext, data }) {
-  const classes = useStyles()
   const { thisDate } = pageContext
   const { edges: posts, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
@@ -68,20 +48,17 @@ export default function Template({ pageContext, data }) {
         <div>
           <h1 style={infoFont}>{tagHeader}</h1>
           {posts.map(({ node }) => {
-            const { slug } = node.fields
             const { title, date } = node.frontmatter
-            const { excerpt } = node
-            const pageLink = "/" + kebabCase(title) + "/"
             return (
-              <div className="blog-posts" key={slug}>
+              <div className="blog-posts" key={date}>
                 {" "}
                 <div className="blog-post-preview">
                   {" "}
                   <h1>
                     {" "}
-                    <a href={pageLink}>{title}</a>{" "}
+                    <a href={`/${kebabCase(title)}/`}>{title}</a>{" "}
                   </h1>{" "}
-                  <h3>{date}</h3> <p>{excerpt}</p>{" "}
+                  <h3>{date}</h3> <p>{node.excerpt}</p>{" "}
                 </div>
               </div>
             )
@@ -89,7 +66,7 @@ export default function Template({ pageContext, data }) {
         </div>
 
         <Hidden smDown>
-          <BlogNav>{classes}</BlogNav>
+          <BlogNav />
         </Hidden>
       </div>
     </Layout>
@@ -106,11 +83,7 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
-          id
           excerpt(pruneLength: 250)
-          fields {
-            slug
-          }
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")

@@ -2,29 +2,10 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import BlogNav from "../components/blogNavSidebar"
-import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 
-const useStyles = makeStyles(theme => ({
-  mainGrid: {
-    margin: theme.spacing(3),
-  },
-  sidebarSection: {
-    marginTop: theme.spacing(3),
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  blogPost: {
-    width: "70%",
-  },
-}))
-
 const Tags = ({ pageContext, data }) => {
-  const classes = useStyles()
   const { tag } = pageContext
   const { edges, totalCount } = data.allMarkdownRemark
   const tagHeader = `${totalCount} post${
@@ -44,32 +25,30 @@ const Tags = ({ pageContext, data }) => {
     <Layout>
       <div style={rowStyle}>
         <div>
-          <ul>
-            <h1 style={infoFont}>{tagHeader}</h1>
-            {edges.map(({ node }) => {
-              const { title, date } = node.frontmatter
-              const { excerpt } = node
-              const pageLink = "/" + kebabCase(title) + "/"
-              return (
-                <div className="blog-posts" key={title}>
+          <h1 style={infoFont}>{tagHeader}</h1>
+          {edges.map(({ node }) => {
+            const { title, date } = node.frontmatter
+            const { excerpt } = node
+            const pageLink = "/" + kebabCase(title) + "/"
+            return (
+              <div className="blog-posts" key={title}>
+                {" "}
+                <div className="blog-post-preview">
                   {" "}
-                  <div className="blog-post-preview">
+                  <h1>
                     {" "}
-                    <h1>
-                      {" "}
-                      <a href={pageLink}>{title}</a>{" "}
-                    </h1>{" "}
-                    <h3>{date}</h3> <p>{excerpt}</p>{" "}
-                  </div>
+                    <a href={pageLink}>{title}</a>{" "}
+                  </h1>{" "}
+                  <h3>{date}</h3> <p>{excerpt}</p>{" "}
                 </div>
-              )
-            })}
-          </ul>
+              </div>
+            )
+          })}
           <Link to="/categories">All categories</Link>
         </div>
 
         <Hidden smDown>
-          <BlogNav>{classes}</BlogNav>
+          <BlogNav></BlogNav>
         </Hidden>
       </div>
     </Layout>
