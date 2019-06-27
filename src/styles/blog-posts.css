@@ -1,7 +1,7 @@
 html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+  font-family: Lato, Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  overflow-y: scroll;
 }
 body {
   margin: 0;
@@ -13,13 +13,6 @@ a:active,
 a:hover {
   text-decoration: underline white;
 }
-
-html {
-  font: 112.5%/1.45em georgia, serif;
-  box-sizing: border-box;
-  overflow-y: scroll;
-}
-
 h1 {
   margin-bottom: 1.45rem;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -52,7 +45,7 @@ h5 {
 }
 div,
 p {
-  font-size: 16px;
+  font-size: 14px;
 }
 .vidContainer {
   position: relative;

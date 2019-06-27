@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import "../styles/blog-posts.css"
+import Footer from "./footer/footer"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -27,16 +28,8 @@ const Layout = ({ children }) => (
           }}
         >
           <main>{children}</main>
-          <footer
-            style={{
-              paddingBottom: "10px",
-              paddingTop: "10px",
-            }}
-          >
-            © {new Date().getFullYear()} | Global Digital Library | Built with
-            {` `}
-            <a href="https://www.gatsbyjs.org">Gatsby</a>
-          </footer>
+
+          <Footer></Footer>
         </div>
       </>
     )}

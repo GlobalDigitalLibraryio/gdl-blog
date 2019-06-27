@@ -1,4 +1,4 @@
-div.blog-post-preview {
+div .blog-post-preview {
   width: 100%;
   border-bottom: 2px solid #e6e6e6;
   padding-top: 1rem;
@@ -34,11 +34,7 @@ a {
 .sidebar {
   padding: 10px;
   position: relative;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(190, 190, 190, 0.1) inset;
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(190, 190, 190, 0.1) inset;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+  box-shadow: 0 1px 2px rgba(100, 100, 100, 0.3),
     0 0 40px rgba(190, 190, 190, 0.1) inset;
 }
 .sidebar:before,
@@ -46,23 +42,16 @@ a {
   content: "";
   position: absolute;
   z-index: -1;
-  -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px rgba(100, 100, 100, 0.8);
   top: 50%;
   bottom: 0;
   left: 10px;
   right: 10px;
-  -moz-border-radius: 100px / 10px;
   border-radius: 100px / 10px;
 }
 .sidebar:after {
   right: 10px;
   left: auto;
-  -webkit-transform: skew(8deg) rotate(3deg);
-  -moz-transform: skew(8deg) rotate(3deg);
-  -ms-transform: skew(8deg) rotate(3deg);
-  -o-transform: skew(8deg) rotate(3deg);
   transform: skew(8deg) rotate(3deg);
 }
 .sidebarWrapper {
@@ -71,4 +60,7 @@ a {
 }
 #active {
   text-decoration: underline;
+}
+.headerText {
+  color: white;
 }

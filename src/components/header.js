@@ -16,7 +16,7 @@ import BlogNavHeader from "./blogNavHeader"
 
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
 const menuItmens = [
-  ["Home", "https://home.digitallibrary.io/about/"],
+  ["Home", "https://home.digitallibrary.io/"],
   ["Blog", "/"],
   ["About", "https://home.digitallibrary.io/about/"],
   ["Contact", "https://home.digitallibrary.io/contact/"],
@@ -24,10 +24,11 @@ const menuItmens = [
 ]
 
 const menuItemStyle = {
-  padding: "8px",
-  flexshrink: 0,
   color: "white",
-  fontSizze: "20px",
+}
+const menuItemActive = {
+  color: "white",
+  textDecoration: "underline",
 }
 
 const useStyles = makeStyles(theme => ({
@@ -48,7 +49,7 @@ const sideList = (side, state, setState) => (
     onKeyDown={toggleDrawer(side, false, state, setState)}
   >
     <List>
-      {menuItmens.map((text, index) => (
+      {menuItmens.map(text => (
         <ListItem button key={text[0]}>
           <a href={text[1]}>
             <ListItemText id="menuItem" primary={text[0]} />
@@ -105,13 +106,37 @@ export default function Header() {
             </Link>
           </Typography>
           <Hidden smDown>
-            {menuItmens.map((menuItem, index) => {
-              return (
-                <Button href={menuItem[1]} key={index} style={menuItemStyle}>
-                  {menuItem[0]}
-                </Button>
-              )
-            })}
+            <Button
+              href="https://home.digitallibrary.io/"
+              key="Home"
+              style={menuItemStyle}
+            >
+              Home
+            </Button>
+            <Button href="/" key="Blog" style={menuItemActive}>
+              Blog
+            </Button>
+            <Button
+              href="https://home.digitallibrary.io/about/"
+              key="About"
+              style={menuItemStyle}
+            >
+              About
+            </Button>
+            <Button
+              href="https://home.digitallibrary.io/contact/"
+              key="Contact"
+              style={menuItemStyle}
+            >
+              Contact
+            </Button>
+            <Button
+              href="https://home.digitallibrary.io/contact/"
+              key="gdl-in-the-news"
+              style={menuItemStyle}
+            >
+              GDL in the news
+            </Button>
           </Hidden>
         </Toolbar>
       </AppBar>
