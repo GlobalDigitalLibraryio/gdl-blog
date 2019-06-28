@@ -11,7 +11,7 @@ body {
 
 a:active,
 a:hover {
-  text-decoration: underline white;
+  text-decoration: underline black;
 }
 h1 {
   margin-bottom: 1.45rem;

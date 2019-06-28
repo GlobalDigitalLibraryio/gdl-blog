@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
-import Divider from "@material-ui/core/Divider"
 import BlogNav from "../components/blogNavSidebar"
 import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
@@ -87,12 +86,11 @@ export default function Template({ data }) {
           </h4>
           <div className="blog-post-content" />
           <div>{renderAst(post.htmlAst)}</div>
-          <div>
+          <div style={{ paddingTop: "20px" }}>
             <b>posted in:</b>
             {categorySting}
           </div>
-          <Divider></Divider>
-        </div>{" "}
+        </div>
         <Hidden smDown>
           <BlogNav>{classes}</BlogNav>
         </Hidden>
@@ -104,13 +102,11 @@ export default function Template({ data }) {
 export const pageQuery = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
       htmlAst
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         title
         author
-        path
         categories
       }
     }

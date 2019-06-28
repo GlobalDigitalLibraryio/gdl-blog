@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.14",
     "@material-ui/core": "^4.1.0",
     "@material-ui/icons": "^4.1.0",
     "@material-ui/styles": "^4.1.0",
@@ -35,6 +36,7 @@
     "rehype-react": "^3.1.0"
   },
   "devDependencies": {
+    "lato-font": "^3.0.0",
     "prettier": "^1.18.2"
   },
   "keywords": [

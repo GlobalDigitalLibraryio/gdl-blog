@@ -10,9 +10,6 @@ import { kebabCase } from "../components/kebabCase"
 import { renderAst } from "../templates/blogTemplate"
 
 const useStyles = makeStyles(theme => ({
-  mainGrid: {
-    margin: theme.spacing(3),
-  },
   sidebarSection: {
     marginTop: theme.spacing(3),
   },
@@ -30,22 +27,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // Variables used to navigate between sides of posts
-const SIDES_PER_PAGE = 3
+const SIDES_PER_PAGE = 5
 var allPosts = []
 var sliceFrom = 0
 var sliceTo = SIDES_PER_PAGE
 
 var getAllPostsOnlyOnce = 0
 function getAll(posts) {
-  //We dont want to get all posts every time we render the page
   if (getAllPostsOnlyOnce !== 0) return
   getAllPostsOnlyOnce += 1
-  //for every post we create a layout
   posts.forEach(({ node: post }) => {
     allPosts.push(
       <div className="blog-post-preview" key={post.id}>
         <h1>
-          <a href={kebabCase(post.frontmatter.title)}>
+          <a className="blackLink" href={kebabCase(post.frontmatter.title)}>
             {post.frontmatter.title}
           </a>
         </h1>
@@ -87,7 +82,9 @@ function olderButtonVisible() {
   return (
     <a href="/">
       <div onClick={() => getOlderPosts()}>
-        <b id={style}> Older posts</b>
+        <b className="blackLink" id={style}>
+          Older posts
+        </b>
       </div>
     </a>
   )
@@ -101,7 +98,9 @@ function newerButtonVisible() {
   return (
     <a href="/">
       <div onClick={() => getNewerPosts()}>
-        <b id={style}>Newer posts </b>
+        <b className="blackLink" id={style}>
+          Newer posts{" "}
+        </b>
       </div>
     </a>
   )
