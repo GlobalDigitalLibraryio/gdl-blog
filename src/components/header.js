@@ -13,6 +13,7 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
 import BlogNavHeader from "./blogNavHeader"
+import { Location } from "@reach/router"
 
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
 const menuItmens = [
@@ -58,7 +59,7 @@ const sideList = (side, state, setState) => (
       ))}
     </List>
     <Divider />
-    <BlogNavHeader />
+    <BlogNavHeader>{thisPath}</BlogNavHeader>
   </div>
 )
 
@@ -73,6 +74,12 @@ const toggleDrawer = (side, open, state, setState) => event => {
   setState({ ...state, [side]: open })
 }
 
+let thisPath
+function whereAreYou(locc) {
+  thisPath = locc.pathname
+  console.log(thisPath)
+}
+
 export default function Header() {
   const classes = useStyles()
   const [state, setState] = React.useState({
@@ -81,6 +88,11 @@ export default function Header() {
 
   return (
     <div className={classes.root}>
+      <Location>
+        {({ location }) => {
+          whereAreYou(location)
+        }}
+      </Location>
       <AppBar position="static" style={{ backgroundColor: "#0277bd" }}>
         <Toolbar>
           <Hidden mdUp>

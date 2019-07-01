@@ -3,17 +3,33 @@ import ListItemText from "@material-ui/core/ListItemText"
 
 export default function SubMenu({ children }) {
   const list = children[0]
-  function getLink(listItem) {
-    return children[1][list.indexOf(listItem)]
+  const thisPath = children[2]
+  function getSubMenuItemStyle(index) {
+    if (thisPath !== "/" + children[1][index] + "/") {
+      return {
+        width: "inherit",
+        paddingTop: "10px",
+        color: "black",
+      }
+    } else {
+      return {
+        width: "inherit",
+        paddingTop: "10px",
+        fontWeight: "bold",
+        color: "black",
+      }
+    }
   }
   return (
     <>
-      {list.map(listItem => (
-        <ListItemText
-          key={listItem}
-          style={{ width: "inherit", paddingTop: "10px" }}
-        >
-          <a href={`/${getLink(listItem)}/`}>{listItem}</a>
+      {list.map((listItem, index) => (
+        <ListItemText key={listItem}>
+          <a
+            href={`/${children[1][index]}/`}
+            style={getSubMenuItemStyle(index)}
+          >
+            {listItem}
+          </a>
         </ListItemText>
       ))}
     </>

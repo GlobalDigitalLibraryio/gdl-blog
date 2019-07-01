@@ -43,12 +43,25 @@ function everyListItemToKebabCase(list) {
 
 const hidden = {
   display: "none",
+  height: 0,
 }
 const notHidden = {
   display: "block",
-  paddingLeft: "10px",
+  height: "auto",
+  paddingLeft: "30px",
+  paddingRight: "10px",
   maxWidth: "200px",
 }
+const closed = {
+  backgroundColor: "inherit",
+}
+const open = {
+  backgroundColor: "rgba(0, 0, 0, 0.20)",
+}
+
+let isOpen1 = closed
+let isOpen2 = closed
+let isOpen3 = closed
 
 let isHidden1 = hidden
 let isHidden2 = hidden
@@ -57,24 +70,22 @@ let isHidden3 = hidden
 function toggleHidden(i) {
   if (i === 1) {
     isHidden1 = isHidden1 === hidden ? notHidden : hidden
+    isOpen1 = isOpen1 === closed ? open : closed
     return
   }
   if (i === 2) {
     isHidden2 = isHidden2 === hidden ? notHidden : hidden
+    isOpen2 = isOpen2 === closed ? open : closed
     return
   }
   if (i === 3) {
     isHidden3 = isHidden3 === hidden ? notHidden : hidden
+    isOpen3 = isOpen3 === closed ? open : closed
     return
   }
 }
 
-const colStyle = {
-  display: "flex",
-  flexDirection: "column",
-}
-
-function BlogNavHeader() {
+function BlogNavHeader({ children }) {
   return (
     <StaticQuery
       query={blogNavQuery}
@@ -82,49 +93,53 @@ function BlogNavHeader() {
         <>
           <List>
             {pushToLists(data, categories2d, dates, titles)}
-            <ListItem button key="Recent">
-              <div style={colStyle}>
-                <div onClick={() => toggleHidden(1)}>
-                  <ListItemText>Recent Posts</ListItemText>
-                </div>
-                <div style={isHidden1}>
-                  <SubMenu>
-                    {titles.slice(0, 5)}
-                    {everyListItemToKebabCase(titles.slice(0, 5))}
-                  </SubMenu>
-                </div>
-              </div>
+            <ListItem
+              button
+              key="Recent"
+              onClick={() => toggleHidden(1)}
+              style={isOpen1}
+            >
+              <ListItemText>Recent Posts</ListItemText>
             </ListItem>
+            <div style={isHidden1}>
+              <SubMenu>
+                {titles.slice(0, 5)}
+                {everyListItemToKebabCase(titles.slice(0, 5))}
+                {children}
+              </SubMenu>
+            </div>
 
-            <ListItem button key="Categories">
-              <div style={colStyle}>
-                <div onClick={() => toggleHidden(2)}>
-                  <ListItemText>Categories</ListItemText>
-                </div>
-
-                <div style={isHidden2}>
-                  <SubMenu>
-                    {MakeFlatCategoireList(categories2d)}
-                    {getCatLink(MakeFlatCategoireList(categories2d))}
-                  </SubMenu>
-                </div>
-              </div>
+            <ListItem
+              button
+              key="Categories"
+              onClick={() => toggleHidden(2)}
+              style={isOpen2}
+            >
+              <ListItemText>Categories</ListItemText>
             </ListItem>
+            <div style={isHidden2}>
+              <SubMenu>
+                {MakeFlatCategoireList(categories2d)}
+                {getCatLink(MakeFlatCategoireList(categories2d))}
+                {children}
+              </SubMenu>
+            </div>
 
-            <ListItem button key="Archive">
-              <div style={colStyle}>
-                <div onClick={() => toggleHidden(3)}>
-                  <ListItemText>Archive</ListItemText>
-                </div>
-
-                <div style={isHidden3}>
-                  <SubMenu>
-                    {findMonthsAndYearsOfPosts(dates)}
-                    {getArchiveLinks(findMonthsAndYearsOfPosts(dates))}
-                  </SubMenu>
-                </div>
-              </div>
+            <ListItem
+              button
+              key="Archive"
+              onClick={() => toggleHidden(3)}
+              style={isOpen3}
+            >
+              <ListItemText>Archive</ListItemText>
             </ListItem>
+            <div style={isHidden3}>
+              <SubMenu>
+                {findMonthsAndYearsOfPosts(dates)}
+                {getArchiveLinks(findMonthsAndYearsOfPosts(dates))}
+                {children}
+              </SubMenu>
+            </div>
           </List>
         </>
       )}

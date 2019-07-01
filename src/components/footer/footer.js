@@ -6,8 +6,8 @@ import CCLogo from "./cc-logo.svg"
 import "./footer.css"
 const Footer = () => {
   return (
-    <footer id="footerContainer">
-      <div id="footerId">
+    <div id="footerContainer">
+      <footer id="footerId">
         <div id="Divider" />
         <ul id="linkList">
           <div>
@@ -83,8 +83,8 @@ const Footer = () => {
             <YoutubeIcon />
           </a>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   )
 }
 export default Footer
