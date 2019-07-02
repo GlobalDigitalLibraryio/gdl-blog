@@ -1,4 +1,8 @@
 {
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": false
+    "editor.formatOnPaste": false,
+    "cSpell.words": [
+      "flatcat",
+      "rehype"
+    ]
   }

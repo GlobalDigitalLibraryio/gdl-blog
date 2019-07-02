@@ -71,28 +71,28 @@ exports.createPages = ({ actions, graphql }) => {
     }
     function getNextMonthWithYear(month, year) {
       if (month == 12) return "01", getNextYear(year)
-      var nextMonth = month + 1
+      let nextMonth = month + 1
       if (nextMonth < 10) nextMonth = "0" + nextMonth
-      var y = year.toString()
+      let y = year.toString()
       nextMonth = nextMonth.toString()
-      var yms = "" + y + "-" + nextMonth
+      let yms = "" + y + "-" + nextMonth
       return yms
     }
 
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
       let d = new Date(node.frontmatter.date)
 
-      var year = d.getFullYear()
-      var nextYear = getNextYear(year)
-      var month = d.getMonth() + 1
-      var nextMonthYear = getNextMonthWithYear(month, year)
+      let year = d.getFullYear()
+      let nextYear = getNextYear(year)
+      let month = d.getMonth() + 1
+      const nextMonthYear = getNextMonthWithYear(month, year)
       if (month < 10) month = "0" + month
-      var monthYear = year + "-" + month
+      const monthYear = year + "-" + month
       year = year.toString()
       nextYear = nextYear.toString()
       month = month.toString()
-      var thisDate = year
-      var nextDate = nextYear
+      let thisDate = year
+      let nextDate = nextYear
 
       createPage({
         path: year,
@@ -102,8 +102,8 @@ exports.createPages = ({ actions, graphql }) => {
           nextDate,
         },
       })
-      var thisDate = monthYear
-      var nextDate = nextMonthYear
+      thisDate = monthYear
+      nextDate = nextMonthYear
 
       createPage({
         path: year + "/" + month,

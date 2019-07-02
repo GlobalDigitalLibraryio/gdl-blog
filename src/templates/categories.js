@@ -4,6 +4,7 @@ import Layout from "../components/layout"
 import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
+import { Divider } from "@material-ui/core"
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -12,20 +13,17 @@ const Tags = ({ pageContext, data }) => {
     totalCount === 1 ? "" : "s"
   } with the category "${tag}":`
 
-  var rowStyle = {
+  const rowStyle = {
     display: "flex",
     flexDirection: "row",
-  }
-  var infoFont = {
-    fontWeight: "400",
-    fontSize: "20px",
   }
 
   return (
     <Layout>
       <div style={rowStyle}>
         <div>
-          <h1 style={infoFont}>{tagHeader}</h1>
+          <h1 className="infoHeader">{tagHeader}</h1>
+          <Divider></Divider>
           {edges.map(({ node }) => {
             const { title, date } = node.frontmatter
             const { excerpt } = node
@@ -37,7 +35,9 @@ const Tags = ({ pageContext, data }) => {
                   {" "}
                   <h1>
                     {" "}
-                    <a href={pageLink}>{title}</a>{" "}
+                    <a className="blackLink" href={pageLink}>
+                      {title}
+                    </a>{" "}
                   </h1>{" "}
                   <h3>{date}</h3> <p>{excerpt}</p>{" "}
                 </div>

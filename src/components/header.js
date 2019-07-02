@@ -16,7 +16,7 @@ import BlogNavHeader from "./blogNavHeader"
 import { Location } from "@reach/router"
 
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
-const menuItmens = [
+const menuItems = [
   ["Home", "https://home.digitallibrary.io/"],
   ["Blog", "/"],
   ["About", "https://home.digitallibrary.io/about/"],
@@ -45,14 +45,13 @@ const useStyles = makeStyles(theme => ({
 }))
 const sideList = (side, state, setState) => (
   <div
-    style={{ widh: 250 }}
     onClick={toggleDrawer(side, false, state, setState)}
     onKeyDown={toggleDrawer(side, false, state, setState)}
   >
     <List>
-      {menuItmens.map(text => (
+      {menuItems.map(text => (
         <ListItem button key={text[0]}>
-          <a href={text[1]}>
+          <a href={text[1]} className="blackLink">
             <ListItemText id="menuItem" primary={text[0]} />
           </a>
         </ListItem>
@@ -75,9 +74,8 @@ const toggleDrawer = (side, open, state, setState) => event => {
 }
 
 let thisPath
-function whereAreYou(locc) {
-  thisPath = locc.pathname
-  console.log(thisPath)
+function whereAreYou(location) {
+  thisPath = location.pathname
 }
 
 export default function Header() {

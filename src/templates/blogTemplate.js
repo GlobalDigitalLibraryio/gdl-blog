@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-around",
   },
   blogPost: {
-    width: "80%",
+    width: "90%",
   },
 }))
 
@@ -53,7 +53,7 @@ function maybeComma(cats, cat) {
 }
 
 function getCategoryString(cats) {
-  var categories = []
+  const categories = []
   cats.forEach(category => {
     categories.push(
       <a
@@ -76,10 +76,8 @@ export default function Template({ data }) {
   return (
     <Layout className="blog-post-container">
       <div className={classes.row}>
-        {" "}
-        <Helmet title={post.frontmatter.title} />{" "}
+        <Helmet title={post.frontmatter.title} />
         <div className={classes.blogPost}>
-          {" "}
           <h1>{post.frontmatter.title}</h1>{" "}
           <h4>
             {post.frontmatter.date} by {post.frontmatter.author}

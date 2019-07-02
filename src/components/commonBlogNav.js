@@ -13,7 +13,7 @@ const months = [
   "December",
 ]
 
-export function MakeFlatCategoireList(categories2d) {
+export function MakeFlatCategoriesList(categories2d) {
   let flatcat = []
   categories2d.forEach(categories => {
     categories.forEach(category => {
@@ -26,7 +26,7 @@ export function MakeFlatCategoireList(categories2d) {
 export function findMonthsAndYearsOfPosts(dates) {
   let monthYears = []
   dates.forEach(date => {
-    var exactDate = date.split(" ")
+    const exactDate = date.split(" ")
     const monthYear = exactDate[0] + " " + exactDate[2]
     if (!monthYears.includes(monthYear)) monthYears.push(monthYear)
   })

@@ -7,18 +7,20 @@ import Link from "@material-ui/core/Link"
 import { kebabCase } from "./kebabCase"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
-import {
-  MakeFlatCategoireList,
-  findMonthsAndYearsOfPosts,
-  getArchiveLink,
-  pushToLists,
-} from "./commonBlogNav"
+import CategoryCard from "../components/categoriesCard"
+import ArchiveCard from "./archiveCard"
 
 import "../styles/blog-listings.css"
 
-const categories2d = []
-const dates = []
 const titles = []
+
+function pushTitlesToList(data, titles) {
+  if (titles.length === 0) {
+    data.allMarkdownRemark.edges.forEach(node => {
+      titles.push(node.node.frontmatter.title)
+    })
+  }
+}
 
 const BlogNav = () => (
   <StaticQuery
@@ -29,8 +31,6 @@ const BlogNav = () => (
             node {
               frontmatter {
                 title
-                date(formatString: "MMMM DD, YYYY")
-                categories
               }
             }
           }
@@ -39,7 +39,7 @@ const BlogNav = () => (
     `}
     render={data => (
       <>
-        {pushToLists(data, categories2d, dates, titles)}
+        {pushTitlesToList(data, titles)}
         <div
           style={{
             margin: `0 auto`,
@@ -56,7 +56,7 @@ const BlogNav = () => (
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Recent Posts
-                  {titles.slice(0, 5).map(rp => (
+                  {titles.slice(0, 5).map((rp, index) => (
                     <Link
                       display="block"
                       variant="body1"
@@ -67,45 +67,20 @@ const BlogNav = () => (
                       {rp}
                     </Link>
                   ))}
+                  <Link
+                    display="block"
+                    variant="body1"
+                    href="/allPosts/"
+                    key="allPosts"
+                    className="sidebarContent"
+                  >
+                    <b>All posts...</b>
+                  </Link>
                 </Typography>
               </CardContent>
             </Card>
-            <Card className="Card">
-              <CardContent>
-                <Typography variant="h6" gutterBottom className="sidebar">
-                  Categories
-                  {MakeFlatCategoireList(categories2d).map(category => (
-                    <Link
-                      display="block"
-                      variant="body1"
-                      href={`/category/${kebabCase(category)}`}
-                      key={category}
-                      className="sidebarContent"
-                    >
-                      {category}
-                    </Link>
-                  ))}
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card className="Card">
-              <CardContent>
-                <Typography variant="h6" gutterBottom className="sidebar">
-                  Archives
-                  {findMonthsAndYearsOfPosts(dates).map(archive => (
-                    <Link
-                      display="block"
-                      variant="body1"
-                      href={`/${getArchiveLink(archive)}`}
-                      key={archive}
-                      className="sidebarContent"
-                    >
-                      {archive}
-                    </Link>
-                  ))}
-                </Typography>
-              </CardContent>
-            </Card>
+            <CategoryCard>with more..</CategoryCard>
+            <ArchiveCard>with more.. </ArchiveCard>
           </Grid>
         </div>
       </>

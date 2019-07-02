@@ -6,6 +6,9 @@ import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 
+import "../styles/blog-listings.css"
+import { Divider } from "@material-ui/core"
+
 function niceDate(uglyDate) {
   let a = uglyDate.split("-")
   if (a.length === 1) return " the year " + a[0]
@@ -33,20 +36,18 @@ export default function Template({ pageContext, data }) {
     totalCount === 1 ? "" : "s"
   } published in ${niceDate(thisDate)}:`
 
-  var rowStyle = {
+  const rowStyle = {
     display: "flex",
     flexDirection: "row",
   }
-  var infoFont = {
-    fontWeight: "400",
-    fontSize: "20px",
-  }
+
   return (
     <Layout>
       <Helmet title="Global Digital Library - Blog" />
       <div style={rowStyle}>
         <div>
-          <h1 style={infoFont}>{tagHeader}</h1>
+          <h1 className="infoHeader">{tagHeader}</h1>
+          <Divider></Divider>
           {posts.map(({ node }) => {
             const { title, date } = node.frontmatter
             return (
@@ -56,7 +57,9 @@ export default function Template({ pageContext, data }) {
                   {" "}
                   <h1>
                     {" "}
-                    <a href={`/${kebabCase(title)}/`}>{title}</a>{" "}
+                    <a className="blackLink" href={`/${kebabCase(title)}/`}>
+                      {title}
+                    </a>{" "}
                   </h1>{" "}
                   <h3>{date}</h3> <p>{node.excerpt}</p>{" "}
                 </div>

@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-around",
   },
   blogPost: {
-    width: "80%",
+    width: "90%",
     display: "flex",
     flexDirection: "column-reverse",
     justifyContent: "flex-end",
@@ -28,14 +28,12 @@ const useStyles = makeStyles(theme => ({
 
 // Variables used to navigate between sides of posts
 const SIDES_PER_PAGE = 5
-var allPosts = []
-var sliceFrom = 0
-var sliceTo = SIDES_PER_PAGE
+const allPosts = []
+let sliceFrom = 0
+let sliceTo = SIDES_PER_PAGE
 
-var getAllPostsOnlyOnce = 0
 function getAll(posts) {
-  if (getAllPostsOnlyOnce !== 0) return
-  getAllPostsOnlyOnce += 1
+  if (allPosts.length > 0) return
   posts.forEach(({ node: post }) => {
     allPosts.push(
       <div className="blog-post-preview" key={post.id}>
@@ -55,7 +53,7 @@ function getSelectedPosts() {
   return allPosts.slice(sliceFrom, sliceTo)
 }
 
-/** When we want to see older posts we upate the variables that controls which posts are visible */
+/** When we want to see older posts we update the variables that controls which posts are visible */
 function getOlderPosts() {
   if (sliceTo >= allPosts.length) return
   else {
@@ -64,7 +62,7 @@ function getOlderPosts() {
   }
 }
 
-/** When we want to see newer posts we upate the variables that controls which posts are visible */
+/** When we want to see newer posts we update the variables that controls which posts are visible */
 function getNewerPosts() {
   if (sliceFrom <= 0) return
   else {
@@ -75,7 +73,7 @@ function getNewerPosts() {
 
 /** sets the style of older-button if its no older posts */
 function olderButtonVisible() {
-  var style
+  let style
   if (sliceTo >= allPosts.length) {
     style = "unavailable"
   }
@@ -91,7 +89,7 @@ function olderButtonVisible() {
 }
 /** sets the style of newer-button if its no newer posts */
 function newerButtonVisible() {
-  var style
+  let style
   if (sliceFrom <= 0) {
     style = "unavailable"
   }
@@ -106,7 +104,7 @@ function newerButtonVisible() {
   )
 }
 
-function navigationControlers() {
+function navigationControllers() {
   return (
     <>
       <div>{newerButtonVisible()}</div>
@@ -130,7 +128,7 @@ export default function bp({ data }) {
       <div className={classes.row}>
         {/*Main content */}
         <div className={classes.blogPost}>
-          <div className={classes.row}>{navigationControlers()}</div>
+          <div className={classes.row}>{navigationControllers()}</div>
           <div>{getSelectedPosts()}</div>
         </div>
         {/*end main content*/}

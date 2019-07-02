@@ -1,8 +1,8 @@
 div .blog-post-preview {
   width: 100%;
   border-bottom: 2px solid #e6e6e6;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
 h4,
@@ -44,4 +44,8 @@ a {
 }
 .headerText {
   color: white;
+}
+.infoHeader {
+  font-weight: 400;
+  font-size: 20px;
 }
