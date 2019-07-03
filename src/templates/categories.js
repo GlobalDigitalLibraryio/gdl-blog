@@ -5,6 +5,7 @@ import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 import { Divider } from "@material-ui/core"
+import BackButton from "../components/backButton"
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -45,7 +46,10 @@ const Tags = ({ pageContext, data }) => {
               </div>
             )
           })}
-          <Link to="/categories">All categories</Link>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Link to="/categories">All categories</Link>
+            <BackButton />
+          </div>
         </div>
 
         <Hidden smDown>

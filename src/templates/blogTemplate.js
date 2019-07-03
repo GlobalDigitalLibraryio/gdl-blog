@@ -6,6 +6,7 @@ import BlogNav from "../components/blogNavSidebar"
 import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
 import rehypeReact from "rehype-react"
+import BackButton from "../components/backButton"
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -88,6 +89,7 @@ export default function Template({ data }) {
             <b>posted in:</b>
             {categorySting}
           </div>
+          <BackButton />
         </div>
         <Hidden smDown>
           <BlogNav>{classes}</BlogNav>

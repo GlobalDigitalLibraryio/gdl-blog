@@ -1,16 +1,16 @@
 import React from "react"
 import Layout from "../components/layout"
+import ArchiveCard from "../components/archiveCard"
 import "../styles/blog-listings.css"
-import CategoryCard from "../components/categoriesCard"
 import BackButton from "../components/backButton"
 
-function CategoriesPage() {
+function ArchivePage() {
   return (
     <Layout>
-      <CategoryCard />
+      <ArchiveCard></ArchiveCard>
       <BackButton />
     </Layout>
   )
 }
 
-export default CategoriesPage
+export default ArchivePage

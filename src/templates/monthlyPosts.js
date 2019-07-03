@@ -8,6 +8,7 @@ import { kebabCase } from "../components/kebabCase"
 
 import "../styles/blog-listings.css"
 import { Divider } from "@material-ui/core"
+import BackButton from "../components/backButton"
 
 function niceDate(uglyDate) {
   let a = uglyDate.split("-")
@@ -52,23 +53,21 @@ export default function Template({ pageContext, data }) {
             const { title, date } = node.frontmatter
             return (
               <div className="blog-posts" key={date}>
-                {" "}
                 <div className="blog-post-preview">
-                  {" "}
                   <h1>
-                    {" "}
                     <a
                       className="blackLink"
                       href={`/${kebabCase(date)}-${kebabCase(title)}/`}
                     >
                       {title}
-                    </a>{" "}
-                  </h1>{" "}
-                  <h3>{date}</h3> <p>{node.excerpt}</p>{" "}
+                    </a>
+                  </h1>
+                  <h3>{date}</h3> <p>{node.excerpt}</p>
                 </div>
               </div>
             )
-          })}{" "}
+          })}
+          <BackButton></BackButton>
         </div>
 
         <Hidden smDown>
