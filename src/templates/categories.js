@@ -27,7 +27,8 @@ const Tags = ({ pageContext, data }) => {
           {edges.map(({ node }) => {
             const { title, date } = node.frontmatter
             const { excerpt } = node
-            const pageLink = "/" + kebabCase(title) + "/"
+            const pageLink =
+              "/" + kebabCase(date) + "-" + kebabCase(title) + "/"
             return (
               <div className="blog-posts" key={title}>
                 {" "}

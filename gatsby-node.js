@@ -22,7 +22,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       basePath: "pages",
     })
 
-    // Creates new query'able field with name of 'slug'
+    // Creates new queryable field with name of 'slug'
     createNodeField({
       node,
       name: "slug",
@@ -113,8 +113,30 @@ exports.createPages = ({ actions, graphql }) => {
           nextDate,
         },
       })
+
+      const months = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+      ]
+      let dato = new Date(node.frontmatter.date)
+      let formatted_date =
+        months[dato.getMonth()] +
+        "-" +
+        (dato.getDate() > 9 ? dato.getDate() : "0" + dato.getDate()) +
+        "-" +
+        dato.getFullYear()
       createPage({
-        path: _.kebabCase(node.frontmatter.title),
+        path: formatted_date + "-" + _.kebabCase(node.frontmatter.title),
         component: plainLayout,
         context: {
           slug: node.fields.slug,

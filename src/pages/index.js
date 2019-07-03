@@ -38,7 +38,12 @@ function getAll(posts) {
     allPosts.push(
       <div className="blog-post-preview" key={post.id}>
         <h1>
-          <a className="blackLink" href={kebabCase(post.frontmatter.title)}>
+          <a
+            className="blackLink"
+            href={`${kebabCase(post.frontmatter.date)}-${kebabCase(
+              post.frontmatter.title
+            )}`}
+          >
             {post.frontmatter.title}
           </a>
         </h1>

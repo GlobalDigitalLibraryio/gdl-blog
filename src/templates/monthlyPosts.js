@@ -57,7 +57,10 @@ export default function Template({ pageContext, data }) {
                   {" "}
                   <h1>
                     {" "}
-                    <a className="blackLink" href={`/${kebabCase(title)}/`}>
+                    <a
+                      className="blackLink"
+                      href={`/${kebabCase(date)}-${kebabCase(title)}/`}
+                    >
                       {title}
                     </a>{" "}
                   </h1>{" "}

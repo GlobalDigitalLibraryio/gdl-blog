@@ -17,7 +17,7 @@ const titles = []
 function pushTitlesToList(data, titles) {
   if (titles.length === 0) {
     data.allMarkdownRemark.edges.forEach(node => {
-      titles.push(node.node.frontmatter.title)
+      titles.push([node.node.frontmatter.title, node.node.frontmatter.date])
     })
   }
 }
@@ -31,6 +31,7 @@ const BlogNav = () => (
             node {
               frontmatter {
                 title
+                date(formatString: "MMMM DD, YYYY")
               }
             }
           }
@@ -56,15 +57,15 @@ const BlogNav = () => (
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Recent Posts
-                  {titles.slice(0, 5).map((rp, index) => (
+                  {titles.slice(0, 5).map(rp => (
                     <Link
                       display="block"
                       variant="body1"
-                      href={`/${kebabCase(rp)}/`}
-                      key={rp}
+                      href={`/${kebabCase(rp[1])}-${kebabCase(rp[0])}/`}
+                      key={rp[0]}
                       className="sidebarContent"
                     >
-                      {rp}
+                      {rp[0]}
                     </Link>
                   ))}
                   <Link
