@@ -29,6 +29,7 @@ function BlogNavHeader({ children }) {
             </a>
           </ListItemText>
         </ListItem>
+        {/** 
         <ListItem button key="Categories">
           <ListItemText>
             <a
@@ -40,6 +41,7 @@ function BlogNavHeader({ children }) {
             </a>
           </ListItemText>
         </ListItem>
+        */}
         <ListItem button key="Archive">
           {" "}
           <ListItemText>

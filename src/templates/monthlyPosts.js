@@ -7,7 +7,7 @@ import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 
 import "../styles/blog-listings.css"
-import { Divider } from "@material-ui/core"
+import { Card } from "@material-ui/core"
 import BackButton from "../components/backButton"
 
 function niceDate(uglyDate) {
@@ -48,12 +48,15 @@ export default function Template({ pageContext, data }) {
       <div style={rowStyle}>
         <div>
           <h1 className="infoHeader">{tagHeader}</h1>
-          <Divider></Divider>
+
           {posts.map(({ node }) => {
             const { title, date } = node.frontmatter
             return (
-              <div className="blog-posts" key={date}>
-                <div className="blog-post-preview">
+              <Card
+                style={{ padding: "10px", marginBottom: "20px" }}
+                key={title}
+              >
+                <div className="blog-posts">
                   <h1>
                     <a
                       className="blackLink"
@@ -64,10 +67,15 @@ export default function Template({ pageContext, data }) {
                   </h1>
                   <h3>{date}</h3> <p>{node.excerpt}</p>
                 </div>
-              </div>
+              </Card>
             )
           })}
-          <BackButton></BackButton>
+          <div className="backAndLinkRow">
+            <BackButton></BackButton>
+            <a style={{ marginTop: "20px" }} href="/archive">
+              Archives
+            </a>
+          </div>
         </div>
 
         <Hidden smDown>

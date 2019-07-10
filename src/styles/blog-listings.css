@@ -4,6 +4,12 @@ div .blog-post-preview {
   padding-bottom: 3rem;
   margin-bottom: 3rem;
 }
+div .blog-post-preview-last {
+  width: 100%;
+  border-bottom: 0;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+}
 
 h4,
 h3 {
@@ -18,12 +24,16 @@ h2 {
   font-weight: 300;
   font-size: 1.3rem;
 }
-a {
-  text-decoration-line: none;
-}
 .blackLink {
   color: black;
   text-decoration-line: none;
+}
+a {
+  text-decoration-line: none;
+  color: #3c5a99;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 #unavailable {
@@ -44,8 +54,4 @@ a {
 }
 .headerText {
   color: white;
-}
-.infoHeader {
-  font-weight: 400;
-  font-size: 20px;
 }

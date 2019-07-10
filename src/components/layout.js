@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import Footer from "./footer/footer"
 import { AppBar, Hidden } from "@material-ui/core"
-import { Link } from "gatsby"
 import gdlLogo from "../images/gdl-logo.svg"
 import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -91,7 +90,7 @@ const Layout = ({ children }) => {
           whereAreYou(location)
         }}
       </Location>
-      <AppBar position="sticky" style={{ backgroundColor: "#0277bd" }}>
+      <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
@@ -111,8 +110,7 @@ const Layout = ({ children }) => {
             </SwipeableDrawer>
           </Hidden>
           <Typography variant="h6" className={classes.title}>
-            <Link
-              to="/"
+            <div
               aria-label="Global Digital Library"
               style={{ display: "flex", justifyContent: "flex-start" }}
             >
@@ -122,7 +120,7 @@ const Layout = ({ children }) => {
                 aria-hidden
                 alt="logo"
               />
-            </Link>
+            </div>
           </Typography>
           <Hidden smDown>
             <Button
@@ -159,14 +157,7 @@ const Layout = ({ children }) => {
           </Hidden>
         </Toolbar>
       </AppBar>
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0px 1.0875rem 1.45rem`,
-          paddingTop: 0,
-        }}
-      >
+      <div id="mainContentWrapper">
         <main>{children}</main>
       </div>
       <Footer></Footer>

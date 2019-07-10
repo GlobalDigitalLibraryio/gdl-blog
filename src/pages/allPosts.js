@@ -8,6 +8,8 @@ import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 import BackButton from "../components/backButton"
+import { Card, Divider } from "@material-ui/core"
+
 const useStyles = makeStyles(theme => ({
   sidebarSection: {
     marginTop: theme.spacing(3),
@@ -18,10 +20,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
   },
   blogPost: {
-    width: "80%",
     display: "flex",
-    flexDirection: "column-reverse",
-    justifyContent: "flex-end",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    marginBottom: "20px",
   },
 }))
 
@@ -35,7 +37,10 @@ function getAll(posts) {
   if (allPosts.length > 0) return
   posts.forEach(({ node: post }) => {
     allPosts.push(
-      <div className="blog-post-preview" key={post.frontmatter.title}>
+      <Card
+        key={post.frontmatter.title}
+        style={{ padding: "10px", marginBottom: "20px" }}
+      >
         <h1>
           <a
             className="blackLink"
@@ -48,7 +53,7 @@ function getAll(posts) {
         </h1>
         <h3>{post.frontmatter.date}</h3>{" "}
         <div dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
-      </div>
+      </Card>
     )
   })
 }
@@ -133,11 +138,14 @@ export default function bp({ data }) {
 
       <div className={classes.row}>
         {/*Main content */}
-        <div className={classes.blogPost}>
-          <BackButton />
-          <div className={classes.row}>{navigationControllers()}</div>
-          <div>{getSelectedPosts()}</div>
+        <div>
           <h1 className="infoHeader">All Blog Posts</h1>
+          <div className={classes.blogPost}>
+            <div>{getSelectedPosts()}</div>
+            <div className={classes.row}>{navigationControllers()}</div>
+          </div>
+          <Divider />
+          <BackButton />
         </div>
         {/*end main content*/}
         <Hidden smDown>

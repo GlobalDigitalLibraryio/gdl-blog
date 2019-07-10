@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link"
 import { kebabCase } from "./kebabCase"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
-import CategoryCard from "../components/categoriesCard"
+// import CategoryCard from "../components/categoriesCard"
 import ArchiveCard from "./archiveCard"
 
 import "../styles/blog-listings.css"
@@ -64,6 +64,7 @@ const BlogNav = () => (
                       href={`/${kebabCase(rp[1])}-${kebabCase(rp[0])}/`}
                       key={rp[0]}
                       className="sidebarContent"
+                      style={{ color: "#3c5a99" }}
                     >
                       {rp[0]}
                     </Link>
@@ -74,13 +75,14 @@ const BlogNav = () => (
                     href="/allPosts/"
                     key="allPosts"
                     className="sidebarContent"
+                    style={{ color: "#3c5a99" }}
                   >
                     <b>All posts...</b>
                   </Link>
                 </Typography>
               </CardContent>
             </Card>
-            <CategoryCard>with more..</CategoryCard>
+            {/** <CategoryCard>with more..</CategoryCard>*/}
             <ArchiveCard>with more.. </ArchiveCard>
           </Grid>
         </div>

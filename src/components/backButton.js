@@ -8,12 +8,12 @@ const BackButton = () => (
     style={{ marginTop: 20, width: "fit-content" }}
     onClick={() => window.history.back()}
   >
-    <ArrowBack style={{ fontSize: 30, color: "#0277bd" }} />
+    <ArrowBack style={{ fontSize: 30, color: "#3c5a99" }} />
     <Typography
       style={{
         marginLeft: 5,
         fontWeight: "bold",
-        color: "#0277bd",
+        color: "#3c5a99",
         fontSize: "10pt",
       }}
     >

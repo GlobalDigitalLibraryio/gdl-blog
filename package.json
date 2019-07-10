@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "gdl-blog",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A blog for GDL",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "gdl@knowit.no",
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.14",
@@ -42,14 +42,15 @@
   "keywords": [
     "gatsby"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "deploy": "gatsby build && s3-deploy './public/**' --cwd './public/' --bucket ${GDL_BLOG_BUCKET} --deleteRemoved --distId ${GDL_BLOG_CLOUD_DIST_ID} --invalidate '/*'"
   },
   "repository": {
     "type": "git",

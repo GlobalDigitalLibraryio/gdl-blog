@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
 import rehypeReact from "rehype-react"
 import BackButton from "../components/backButton"
+import { Card } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   mainGrid: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-around",
   },
   blogPost: {
-    width: "90%",
+    width: "100%",
   },
 }))
 
@@ -54,6 +55,7 @@ function maybeComma(cats, cat) {
 }
 
 function getCategoryString(cats) {
+  if (cats === null) return "uncategorized"
   const categories = []
   cats.forEach(category => {
     categories.push(
@@ -66,31 +68,38 @@ function getCategoryString(cats) {
       </a>
     )
   })
-  return categories
+  return (
+    <>
+      <b>posted in:</b>
+      {categories}
+    </>
+  )
 }
 
 export default function Template({ data }) {
   const classes = useStyles()
   const post = data.markdownRemark
-  const categorySting = getCategoryString(post.frontmatter.categories)
 
   return (
     <Layout className="blog-post-container">
       <div className={classes.row}>
         <Helmet title={post.frontmatter.title} />
+
         <div className={classes.blogPost}>
-          <h1>{post.frontmatter.title}</h1>{" "}
-          <h4>
-            {post.frontmatter.date} by {post.frontmatter.author}
-          </h4>
-          <div className="blog-post-content" />
-          <div>{renderAst(post.htmlAst)}</div>
-          <div style={{ paddingTop: "20px" }}>
-            <b>posted in:</b>
-            {categorySting}
-          </div>
+          <Card style={{ marginTop: "20px", padding: "20px", paddingTop: 0 }}>
+            <h1>{post.frontmatter.title}</h1>{" "}
+            <h3>
+              {post.frontmatter.date} by {post.frontmatter.author}
+            </h3>
+            <div className="blog-post-content" />
+            <div>{renderAst(post.htmlAst)}</div>
+            <div style={{ paddingTop: "20px" }}>
+              {getCategoryString(post.frontmatter.categories)}
+            </div>
+          </Card>
           <BackButton />
         </div>
+
         <Hidden smDown>
           <BlogNav>{classes}</BlogNav>
         </Hidden>

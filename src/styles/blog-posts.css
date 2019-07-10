@@ -7,6 +7,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #eff2f9;
 }
 
 a:active,
@@ -63,4 +64,29 @@ p {
 img {
   position: relative;
   max-width: 100%;
+}
+#mainContentWrapper {
+  max-width: 1060px;
+  margin: auto;
+  padding: 0px 36px 1.45rem;
+}
+.infoHeader {
+  font-weight: 600;
+  font-size: 25px;
+}
+.backAndLinkRow {
+  display: flex;
+  justify-content: space-between;
+}
+@media only screen and (max-width: 480px) {
+  #mainContentWrapper {
+    padding: 0;
+  }
+  .infoHeader {
+    padding-left: 20px;
+  }
+  .backAndLinkRow {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }

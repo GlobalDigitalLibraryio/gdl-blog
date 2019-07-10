@@ -8,6 +8,7 @@ import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
 import { renderAst } from "../templates/blogTemplate"
+import { Card } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   sidebarSection: {
@@ -19,10 +20,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-around",
   },
   blogPost: {
-    width: "90%",
+    width: "100%",
     display: "flex",
-    flexDirection: "column-reverse",
-    justifyContent: "flex-end",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    marginTop: "20px",
   },
 }))
 
@@ -36,7 +38,10 @@ function getAll(posts) {
   if (allPosts.length > 0) return
   posts.forEach(({ node: post }) => {
     allPosts.push(
-      <div className="blog-post-preview" key={post.id}>
+      <Card
+        style={{ marginBottom: "20px", padding: "20px", paddingTop: 0 }}
+        key={post.id}
+      >
         <h1>
           <a
             className="blackLink"
@@ -48,14 +53,9 @@ function getAll(posts) {
           </a>
         </h1>
         <h3>{post.frontmatter.date}</h3> <div>{renderAst(post.htmlAst)}</div>
-      </div>
+      </Card>
     )
   })
-}
-
-/** We get the posts we want to show on the index page */
-function getSelectedPosts() {
-  return allPosts.slice(sliceFrom, sliceTo)
 }
 
 /** When we want to see older posts we update the variables that controls which posts are visible */
@@ -133,8 +133,8 @@ export default function bp({ data }) {
       <div className={classes.row}>
         {/*Main content */}
         <div className={classes.blogPost}>
+          <div>{allPosts.slice(sliceFrom, sliceTo)}</div>
           <div className={classes.row}>{navigationControllers()}</div>
-          <div>{getSelectedPosts()}</div>
         </div>
         {/*end main content*/}
         <Hidden smDown>

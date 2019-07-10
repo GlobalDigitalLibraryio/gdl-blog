@@ -70,7 +70,14 @@
 }
 
 #socialMediaIcons a:hover {
-  color: #0277bd;
+  color: #3c5a99;
+}
+
+@media only screen and (max-width: 480px) {
+  #footerContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 @media (max-width: 768px) {
