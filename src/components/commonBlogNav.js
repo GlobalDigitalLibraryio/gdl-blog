@@ -1,3 +1,4 @@
+//@flow
 const months = [
   "January",
   "February",
@@ -13,17 +14,7 @@ const months = [
   "December",
 ]
 
-export function MakeFlatCategoriesList(categories2d) {
-  let flatcat = []
-  categories2d.forEach(categories => {
-    categories.forEach(category => {
-      if (!flatcat.includes(category)) flatcat.push(category)
-    })
-  })
-  return flatcat
-}
-
-export function findMonthsAndYearsOfPosts(dates) {
+export function findMonthsAndYearsOfPosts(dates: Array<string>) {
   let monthYears = []
   dates.forEach(date => {
     const exactDate = date.split(" ")
@@ -33,19 +24,9 @@ export function findMonthsAndYearsOfPosts(dates) {
   return monthYears
 }
 
-export function getArchiveLink(archiveDate) {
+export function getArchiveLink(archiveDate: string) {
   let a = archiveDate.split(" ")
   let month = months.indexOf(a[0]) + 1
   if (month < 10) month = "0" + month
   return a[1] + "/" + month
-}
-
-export function pushToLists(data, categories2d, dates, titles) {
-  if (titles.length === 0) {
-    data.allMarkdownRemark.edges.forEach(node => {
-      categories2d.push(node.node.frontmatter.categories)
-      dates.push(node.node.frontmatter.date)
-      titles.push(node.node.frontmatter.title)
-    })
-  }
 }

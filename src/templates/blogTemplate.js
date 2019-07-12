@@ -1,32 +1,27 @@
+//@flow
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import Helmet from "react-helmet"
 import BlogNav from "../components/blogNavSidebar"
-import { makeStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
 import rehypeReact from "rehype-react"
 import BackButton from "../components/backButton"
 import { Card } from "@material-ui/core"
 
-const useStyles = makeStyles(theme => ({
-  mainGrid: {
-    margin: theme.spacing(3),
+type pq = {
+  markdownRemark: {
+    htmlAst: any,
+    frontmatter: {
+      date: string,
+      title: string,
+      author: string,
+      categories: Array<string>,
+    },
   },
-  sidebarSection: {
-    marginTop: theme.spacing(3),
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  blogPost: {
-    width: "100%",
-  },
-}))
+}
 
-export const videoTag = link => {
+export const videoTag = (link: { children: Array<String> }) => {
   return (
     <div className="vidContainer">
       <iframe
@@ -48,7 +43,7 @@ export const renderAst = new rehypeReact({
   },
 }).Compiler
 
-function maybeComma(cats, cat) {
+function maybeComma(cats: Array<string>, cat: string) {
   if (!cats.indexOf(cat) + 1 === cats.length) {
     return ","
   }
@@ -76,36 +71,46 @@ function getCategoryString(cats) {
   )
 }
 
-export default function Template({ data }) {
-  const classes = useStyles()
-  const post = data.markdownRemark
+type Props = {
+  data: pq,
+}
+export default class Template extends React.Component<Props> {
+  render() {
+    const post = this.props.data.markdownRemark
 
-  return (
-    <Layout className="blog-post-container">
-      <div className={classes.row}>
-        <Helmet title={post.frontmatter.title} />
+    return (
+      <Layout className="blog-post-container">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <div>
+            <Helmet title={post.frontmatter.title} />
 
-        <div className={classes.blogPost}>
-          <Card style={{ marginTop: "20px", padding: "20px", paddingTop: 0 }}>
-            <h1>{post.frontmatter.title}</h1>{" "}
-            <h3>
-              {post.frontmatter.date} by {post.frontmatter.author}
-            </h3>
-            <div className="blog-post-content" />
-            <div>{renderAst(post.htmlAst)}</div>
-            <div style={{ paddingTop: "20px" }}>
-              {getCategoryString(post.frontmatter.categories)}
-            </div>
-          </Card>
-          <BackButton />
+            <div style={{ width: "100%" }} />
+            <Card style={{ marginTop: "20px", padding: "20px", paddingTop: 0 }}>
+              <h1>{post.frontmatter.title}</h1>{" "}
+              <h3>
+                {post.frontmatter.date} by {post.frontmatter.author}
+              </h3>
+              <div className="blog-post-content" />
+              <div>{renderAst(post.htmlAst)}</div>
+              <div style={{ paddingTop: "20px" }}>
+                {getCategoryString(post.frontmatter.categories)}
+              </div>
+            </Card>
+            <BackButton />
+          </div>
+          <Hidden smDown>
+            <BlogNav />
+          </Hidden>
         </div>
-
-        <Hidden smDown>
-          <BlogNav>{classes}</BlogNav>
-        </Hidden>
-      </div>
-    </Layout>
-  )
+      </Layout>
+    )
+  }
 }
 
 export const pageQuery = graphql`

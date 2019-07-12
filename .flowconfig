@@ -1,0 +1,13 @@
+[ignore]
+.*/node_modules/jss/
+
+[untyped]
+
+[include]
+
+[libs]
+
+[options]
+
+[lints]
+all=warn

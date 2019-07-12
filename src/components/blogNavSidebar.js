@@ -1,3 +1,4 @@
+//@flow
 import React from "react"
 import { StaticQuery } from "gatsby"
 import Grid from "@material-ui/core/Grid"
@@ -7,14 +8,26 @@ import Link from "@material-ui/core/Link"
 import { kebabCase } from "./kebabCase"
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
-// import CategoryCard from "../components/categoriesCard"
 import ArchiveCard from "./archiveCard"
 
 import "../styles/blog-listings.css"
 
 const titles = []
+type titleAndDate = {
+  node: {
+    frontmatter: {
+      title: string,
+      date: string,
+    },
+  },
+}
+type sq = {
+  allMarkdownRemark: {
+    edges: Array<titleAndDate>,
+  },
+}
 
-function pushTitlesToList(data, titles) {
+function pushTitlesToList(data: sq) {
   if (titles.length === 0) {
     data.allMarkdownRemark.edges.forEach(node => {
       titles.push([node.node.frontmatter.title, node.node.frontmatter.date])
@@ -38,9 +51,9 @@ const BlogNav = () => (
         }
       }
     `}
-    render={data => (
+    render={(data: sq) => (
       <>
-        {pushTitlesToList(data, titles)}
+        {pushTitlesToList(data)}
         <div
           style={{
             margin: `0 auto`,
@@ -57,7 +70,7 @@ const BlogNav = () => (
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   Recent Posts
-                  {titles.slice(0, 5).map(rp => (
+                  {titles.slice(0, 5).map((rp: Array<string>) => (
                     <Link
                       display="block"
                       variant="body1"
@@ -82,8 +95,8 @@ const BlogNav = () => (
                 </Typography>
               </CardContent>
             </Card>
-            {/** <CategoryCard>with more..</CategoryCard>*/}
-            <ArchiveCard>with more.. </ArchiveCard>
+            {/** <CategoryCard more={true}>*/}
+            <ArchiveCard more={true} />
           </Grid>
         </div>
       </>

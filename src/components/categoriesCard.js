@@ -1,3 +1,4 @@
+//@flow
 import React from "react"
 import { StaticQuery } from "gatsby"
 import Card from "@material-ui/core/Card"
@@ -13,7 +14,10 @@ const colStyle = {
   flexDirection: "column",
 }
 
-function listCategoriesWithMore(categories, more) {
+function listCategoriesWithMore(
+  categories: Array<catAndNumber>,
+  more: boolean
+) {
   if (more) {
     const slicedList = categories.slice(0, 5)
     return (
@@ -34,7 +38,7 @@ function listCategoriesWithMore(categories, more) {
   }
 }
 
-function listCategories(categories) {
+function listCategories(categories: Array<catAndNumber>) {
   return categories.map(category => (
     <Link
       display="block"
@@ -47,33 +51,49 @@ function listCategories(categories) {
     </Link>
   ))
 }
+type catAndNumber = {
+  fieldValue: string,
+  totalCount: number,
+}
+type statQueryData = {
+  allMarkdownRemark: {
+    group: Array<catAndNumber>,
+  },
+}
 
-const CategoryCard = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        allMarkdownRemark(
-          limit: 2000
-          sort: { order: DESC, fields: [frontmatter___categories] }
-        ) {
-          group(field: frontmatter___categories) {
-            fieldValue
-            totalCount
+class CategoryCard extends React.Component<{ more: boolean }> {
+  render() {
+    return (
+      <StaticQuery
+        query={graphql`
+          query {
+            allMarkdownRemark(
+              limit: 2000
+              sort: { order: DESC, fields: [frontmatter___categories] }
+            ) {
+              group(field: frontmatter___categories) {
+                fieldValue
+                totalCount
+              }
+            }
           }
-        }
-      }
-    `}
-    render={data => (
-      <Card className="Card">
-        <CardContent>
-          <Typography variant="h6" gutterBottom style={colStyle}>
-            Categories
-            {listCategoriesWithMore(data.allMarkdownRemark.group, children)}
-          </Typography>
-        </CardContent>
-      </Card>
-    )}
-  />
-)
+        `}
+        render={(data: statQueryData) => (
+          <Card className="Card">
+            <CardContent>
+              <Typography variant="h6" gutterBottom style={colStyle}>
+                Categories
+                {listCategoriesWithMore(
+                  data.allMarkdownRemark.group,
+                  this.props.more
+                )}
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+      />
+    )
+  }
+}
 
 export default CategoryCard

@@ -1,6 +1,6 @@
+//@flow
 import React from "react"
 import Layout from "../components/layout"
-import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
@@ -10,22 +10,26 @@ import { kebabCase } from "../components/kebabCase"
 import BackButton from "../components/backButton"
 import { Card, Divider } from "@material-ui/core"
 
-const useStyles = makeStyles(theme => ({
-  sidebarSection: {
-    marginTop: theme.spacing(3),
+const rowStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+}
+type node = {
+  node: {
+    excerpt: string,
+    frontmatter: {
+      title: string,
+      date: string,
+      author: string,
+    },
   },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+}
+type pqData = {
+  allMarkdownRemark: {
+    edges: Array<node>,
   },
-  blogPost: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    marginBottom: "20px",
-  },
-}))
+}
 
 // Variables used to navigate between sides of posts
 const SIDES_PER_PAGE = 10
@@ -33,34 +37,29 @@ const allPosts = []
 let sliceFrom = 0
 let sliceTo = SIDES_PER_PAGE
 
-function getAll(posts) {
+function getAll(posts: Array<node>) {
   if (allPosts.length > 0) return
-  posts.forEach(({ node: post }) => {
+  posts.forEach(post => {
     allPosts.push(
       <Card
-        key={post.frontmatter.title}
+        key={post.node.frontmatter.title}
         style={{ padding: "10px", marginBottom: "20px" }}
       >
         <h1>
           <a
             className="blackLink"
-            href={`/${kebabCase(post.frontmatter.date)}-${kebabCase(
-              post.frontmatter.title
+            href={`/${kebabCase(post.node.frontmatter.date)}-${kebabCase(
+              post.node.frontmatter.title
             )}`}
           >
-            {post.frontmatter.title}
+            {post.node.frontmatter.title}
           </a>
         </h1>
-        <h3>{post.frontmatter.date}</h3>{" "}
-        <div dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
+        <h3>{post.node.frontmatter.date}</h3>{" "}
+        <div dangerouslySetInnerHTML={{ __html: post.node.excerpt }}></div>
       </Card>
     )
   })
-}
-
-/** We get the posts we want to show on the index page */
-function getSelectedPosts() {
-  return allPosts.slice(sliceFrom, sliceTo)
 }
 
 /** When we want to see older posts we update the variables that controls which posts are visible */
@@ -127,34 +126,42 @@ function navigationControllers() {
     </>
   )
 }
-export default function bp({ data }) {
-  const { edges: posts } = data.allMarkdownRemark
-  const classes = useStyles()
 
-  return (
-    <Layout>
-      {getAll(posts)}
-      <Helmet title="Global Digital Library - All posts" />
+export default class bp extends React.Component<{ data: pqData }> {
+  render() {
+    return (
+      <Layout>
+        {getAll(this.props.data.allMarkdownRemark.edges)}
+        <Helmet title="Global Digital Library - All posts" />
 
-      <div className={classes.row}>
-        {/*Main content */}
-        <div>
-          <h1 className="infoHeader">All Blog Posts</h1>
-          <div className={classes.blogPost}>
-            <div>{getSelectedPosts()}</div>
-            <div className={classes.row}>{navigationControllers()}</div>
+        <div style={rowStyle}>
+          {/*Main content */}
+          <div>
+            <h1 className="infoHeader">All Blog Posts</h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                marginBottom: "20px",
+              }}
+            >
+              <div>{allPosts.slice(sliceFrom, sliceTo)}</div>
+              <div style={rowStyle}>{navigationControllers()}</div>
+            </div>
+            <Divider />
+            <BackButton />
           </div>
-          <Divider />
-          <BackButton />
+          {/*end main content*/}
+          <Hidden smDown>
+            <BlogNav />
+          </Hidden>
         </div>
-        {/*end main content*/}
-        <Hidden smDown>
-          <BlogNav>{classes}</BlogNav>
-        </Hidden>
-      </div>
-    </Layout>
-  )
+      </Layout>
+    )
+  }
 }
+
 export const pageQuery = graphql`
   query IndexQuery2 {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {

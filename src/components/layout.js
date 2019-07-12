@@ -1,9 +1,8 @@
+//@flow
 import React from "react"
-import PropTypes from "prop-types"
 import Footer from "./footer/footer"
 import { AppBar, Hidden } from "@material-ui/core"
 import gdlLogo from "../images/gdl-logo.svg"
-import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
@@ -34,14 +33,6 @@ const menuItemActive = {
   textDecoration: "underline",
 }
 
-const useStyles = makeStyles(theme => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}))
 const sideList = (side, state, setState) => (
   <div
     onClick={toggleDrawer(side, false, state, setState)}
@@ -57,7 +48,7 @@ const sideList = (side, state, setState) => (
       ))}
     </List>
     <Divider />
-    <BlogNavHeader>{thisPath}</BlogNavHeader>
+    <BlogNavHeader path={thisPath} />
   </div>
 )
 
@@ -72,13 +63,9 @@ const toggleDrawer = (side, open, state, setState) => event => {
   setState({ ...state, [side]: open })
 }
 
-let thisPath
-function whereAreYou(location) {
-  thisPath = location.pathname
-}
+let thisPath: string
 
-const Layout = ({ children }) => {
-  const classes = useStyles()
+const Layout = ({ children }: any) => {
   const [state, setState] = React.useState({
     left: false,
   })
@@ -87,14 +74,14 @@ const Layout = ({ children }) => {
     <>
       <Location>
         {({ location }) => {
-          whereAreYou(location)
+          thisPath = location.pathname
         }}
       </Location>
       <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
           <Hidden mdUp>
             <IconButton
-              className={classes.menuButton}
+              style={{ marginRight: "16px" }}
               color="inherit"
               aria-label="Menu"
               onClick={toggleDrawer("left", true, state, setState)}
@@ -109,7 +96,7 @@ const Layout = ({ children }) => {
               {sideList(" ", state, setState)}
             </SwipeableDrawer>
           </Hidden>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
             <div
               aria-label="Global Digital Library"
               style={{ display: "flex", justifyContent: "flex-start" }}
@@ -163,10 +150,6 @@ const Layout = ({ children }) => {
       <Footer></Footer>
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

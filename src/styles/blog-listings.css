@@ -38,6 +38,11 @@ a:hover {
 
 #unavailable {
   color: lightgray;
+  text-decoration: none;
+}
+
+#unavailable:hover {
+  text-decoration: none;
 }
 
 .material-icons.md-light {

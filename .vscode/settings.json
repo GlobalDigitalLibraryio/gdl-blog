@@ -1,8 +1,6 @@
 {
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": false,
-    "cSpell.words": [
-      "flatcat",
-      "rehype"
-    ]
-  }
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "cSpell.words": ["flatcat", "rehype"],
+  "javascript.validate.enable": false
+}

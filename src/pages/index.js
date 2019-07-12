@@ -1,6 +1,6 @@
+//@flow
 import React from "react"
 import Layout from "../components/layout"
-import { makeStyles } from "@material-ui/core/styles"
 import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
@@ -10,23 +10,31 @@ import { kebabCase } from "../components/kebabCase"
 import { renderAst } from "../templates/blogTemplate"
 import { Card } from "@material-ui/core"
 
-const useStyles = makeStyles(theme => ({
-  sidebarSection: {
-    marginTop: theme.spacing(3),
+const rowStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-around",
+}
+
+type node = {
+  node: {
+    htmlAst: any,
+    excerpt: string,
+    id: number,
+    frontmatter: {
+      title: string,
+      date: string,
+      author: string,
+    },
   },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
+}
+type Props = {
+  data: {
+    allMarkdownRemark: {
+      edges: Array<node>,
+    },
   },
-  blogPost: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    marginTop: "20px",
-  },
-}))
+}
 
 // Variables used to navigate between sides of posts
 const SIDES_PER_PAGE = 5
@@ -34,7 +42,7 @@ const allPosts = []
 let sliceFrom = 0
 let sliceTo = SIDES_PER_PAGE
 
-function getAll(posts) {
+function getAll(posts: Array<node>) {
   if (allPosts.length > 0) return
   posts.forEach(({ node: post }) => {
     allPosts.push(
@@ -122,28 +130,37 @@ function navigationControllers() {
     </>
   )
 }
-export default function bp({ data }) {
-  const { edges: posts } = data.allMarkdownRemark
-  const classes = useStyles()
-
-  return (
-    <Layout>
-      {getAll(posts)}
-      <Helmet title="Global Digital Library - Blog" />
-      <div className={classes.row}>
-        {/*Main content */}
-        <div className={classes.blogPost}>
-          <div>{allPosts.slice(sliceFrom, sliceTo)}</div>
-          <div className={classes.row}>{navigationControllers()}</div>
+export default class bp extends React.Component<Props> {
+  render() {
+    const { edges: posts } = this.props.data.allMarkdownRemark
+    return (
+      <Layout>
+        {getAll(posts)}
+        <Helmet title="Global Digital Library - Blog" />
+        <div style={rowStyle}>
+          {/*Main content */}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              marginTop: "20px",
+            }}
+          >
+            <div>{allPosts.slice(sliceFrom, sliceTo)}</div>
+            <div style={rowStyle}>{navigationControllers()}</div>
+          </div>
+          {/*end main content*/}
+          <Hidden smDown>
+            <BlogNav />
+          </Hidden>
         </div>
-        {/*end main content*/}
-        <Hidden smDown>
-          <BlogNav>{classes}</BlogNav>
-        </Hidden>
-      </div>
-    </Layout>
-  )
+      </Layout>
+    )
+  }
 }
+
 export const pageQuery = graphql`
   query IndexQuery {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {

@@ -1,3 +1,4 @@
+//@flow
 import React from "react"
 import { StaticQuery } from "gatsby"
 import Card from "@material-ui/core/Card"
@@ -12,7 +13,16 @@ import {
 } from "../components/commonBlogNav"
 
 let dates = []
-function getDates(allEdges) {
+
+type dateObject = {
+  node: {
+    frontmatter: {
+      date: string,
+    },
+  },
+}
+
+function getDates(allEdges: Array<dateObject>) {
   allEdges.forEach(edge => {
     dates.push(edge.node.frontmatter.date)
   })
@@ -22,9 +32,9 @@ const colStyle = {
   flexDirection: "column",
 }
 
-function listArchiveWithMore(categories, more) {
+function listArchiveWithMore(monthYears: Array<string>, more: boolean) {
   if (more) {
-    const slicedList = categories.slice(0, 5)
+    const slicedList = monthYears.slice(0, 5)
     return (
       <>
         {listDates(slicedList)}
@@ -39,17 +49,17 @@ function listArchiveWithMore(categories, more) {
       </>
     )
   } else {
-    return listDates(categories)
+    return listDates(monthYears)
   }
 }
 
-function listDates(dates) {
-  return dates.map(archive => (
+function listDates(dates: Array<string>) {
+  return dates.map((archive, index) => (
     <Link
       display="block"
       variant="body1"
       href={`/${getArchiveLink(archive)}`}
-      key={archive}
+      key={index}
       className="sidebarContent"
     >
       {archive}
@@ -57,44 +67,60 @@ function listDates(dates) {
   ))
 }
 
-const ArchiveCard = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query hei {
-        allMarkdownRemark(
-          limit: 2000
-          sort: { order: DESC, fields: [frontmatter___date] }
-        ) {
-          edges {
-            node {
-              frontmatter {
-                date(formatString: "MMMM DD, YYYY")
+type Props = {
+  more: boolean,
+}
+type sq = {
+  allMarkdownRemark: {
+    edges: Array<dateObject>,
+  },
+}
+
+class ArchiveCard extends React.Component<Props> {
+  render() {
+    return (
+      <StaticQuery
+        query={graphql`
+          query {
+            allMarkdownRemark(
+              limit: 2000
+              sort: { order: DESC, fields: [frontmatter___date] }
+            ) {
+              edges {
+                node {
+                  frontmatter {
+                    date(formatString: "MMMM DD, YYYY")
+                  }
+                }
               }
             }
           }
-        }
-      }
-    `}
-    render={data => (
-      <>
-        {getDates(data.allMarkdownRemark.edges)}
-        <Card className="Card">
-          <CardContent>
-            <Typography
-              variant="h6"
-              gutterBottom
-              className="sidebar"
-              style={colStyle}
-            >
-              Archives
-              {listArchiveWithMore(findMonthsAndYearsOfPosts(dates), children)}
-              {}
-            </Typography>
-          </CardContent>
-        </Card>
-      </>
-    )}
-  />
-)
+        `}
+        render={(data: sq) => (
+          <>
+            {getDates(data.allMarkdownRemark.edges)}
+            <Card className="Card">
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  gutterBottom
+                  className="sidebar"
+                  style={colStyle}
+                >
+                  Archives
+                  {listArchiveWithMore(
+                    findMonthsAndYearsOfPosts(dates),
+                    this.props.more
+                  )}
+                  {}
+                </Typography>
+              </CardContent>
+            </Card>
+          </>
+        )}
+      />
+    )
+  }
+}
 
 export default ArchiveCard

@@ -3,6 +3,7 @@ module.exports = {
     title: "Global digital library",
   },
   plugins: [
+    `gatsby-plugin-flow`,
     `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-material-ui`,

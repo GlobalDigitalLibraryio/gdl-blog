@@ -15,6 +15,7 @@
     "gatsby-image": "^2.1.2",
     "gatsby-plugin-catch-links": "^2.0.15",
     "gatsby-plugin-favicon": "^3.1.6",
+    "gatsby-plugin-flow": "^1.1.0",
     "gatsby-plugin-manifest": "^2.1.1",
     "gatsby-plugin-material-ui": "^2.0.1",
     "gatsby-plugin-offline": "^2.1.1",
@@ -36,6 +37,7 @@
     "rehype-react": "^3.1.0"
   },
   "devDependencies": {
+    "flow-bin": "^0.102.0",
     "lato-font": "^3.0.0",
     "prettier": "^1.18.2"
   },

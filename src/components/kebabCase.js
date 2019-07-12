@@ -1,4 +1,5 @@
-export function kebabCase(string) {
+//@flow
+export function kebabCase(string: string) {
   let str = string.toString()
   str = str.replace(/(\s)|((\.+))/g, "-")
   str = str.replace(/(\?+)|(!+)|(,+)|(_+)/g, "")
