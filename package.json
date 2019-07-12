@@ -47,11 +47,9 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "start": "gatsby serve",
     "deploy": "gatsby build && s3-deploy './public/**' --cwd './public/' --bucket ${GDL_BLOG_BUCKET} --deleteRemoved --distId ${GDL_BLOG_CLOUD_DIST_ID} --invalidate '/*'"
   },
   "repository": {
