@@ -135,7 +135,7 @@ const Layout = ({ children }: any) => {
               Contact
             </Button>
             <Button
-              href="https://home.digitallibrary.io/contact/"
+              href="https://home.digitallibrary.io/gdl-in-the-news/"
               key="gdl-in-the-news"
               style={menuItemStyle}
             >
