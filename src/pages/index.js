@@ -1,7 +1,6 @@
 //@flow
 import React from "react"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
 import BlogNav from "../components/blogNavSidebar"
@@ -136,7 +135,6 @@ export default class bp extends React.Component<Props> {
     return (
       <Layout>
         {getAll(posts)}
-        <Helmet title="Global Digital Library - Blog" />
         <div style={rowStyle}>
           {/*Main content */}
           <div

@@ -2,7 +2,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
 import BlogNav from "../components/blogNavSidebar"
 import Hidden from "@material-ui/core/Hidden"
 import { kebabCase } from "../components/kebabCase"
@@ -70,7 +69,6 @@ export default class Template extends React.Component<Props> {
 
     return (
       <Layout>
-        <Helmet title="Global Digital Library - Blog" />
         <div style={rowStyle}>
           <div>
             <h1 className="infoHeader">{tagHeader}</h1>

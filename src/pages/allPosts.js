@@ -1,7 +1,6 @@
 //@flow
 import React from "react"
 import Layout from "../components/layout"
-import Helmet from "react-helmet"
 import "../styles/blog-listings.css"
 import { graphql } from "gatsby"
 import BlogNav from "../components/blogNavSidebar"
@@ -132,7 +131,6 @@ export default class bp extends React.Component<{ data: pqData }> {
     return (
       <Layout>
         {getAll(this.props.data.allMarkdownRemark.edges)}
-        <Helmet title="Global Digital Library - All posts" />
 
         <div style={rowStyle}>
           {/*Main content */}

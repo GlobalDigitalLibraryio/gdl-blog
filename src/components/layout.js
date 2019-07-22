@@ -15,6 +15,7 @@ import ListItemText from "@material-ui/core/ListItemText"
 import BlogNavHeader from "./blogNavHeader"
 import { Location } from "@reach/router"
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
+import Helmet from "react-helmet"
 import "../styles/blog-posts.css"
 
 const menuItems = [
@@ -72,6 +73,7 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
+      <Helmet title="Blog | Global Digital Library" />
       <Location>
         {({ location }) => {
           thisPath = location.pathname
