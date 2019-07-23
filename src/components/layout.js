@@ -18,12 +18,28 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
 import Helmet from "react-helmet"
 import "../styles/blog-posts.css"
 
+let homeLink
+switch (process.env.GATSBY_GDL_ENVIRONMENT) {
+  case `test`:
+    homeLink = `https://test.home.digitallibrary.io/`
+    break
+  case `development`:
+    homeLink = `http://localhost:8000/`
+    break
+  case `staging`:
+    homeLink = `https://staging.home.digitallibrary.io/`
+    break
+  default:
+    homeLink = `https://home.digitallibrary.io/`
+    break
+}
+
 const menuItems = [
-  ["Home", "https://home.digitallibrary.io/"],
+  ["Home", homeLink],
   ["Blog", "/"],
-  ["About", "https://home.digitallibrary.io/about/"],
-  ["Contact", "https://home.digitallibrary.io/contact/"],
-  ["GDL in the news", "https://home.digitallibrary.io/gdl-in-the-news/"],
+  ["About", homeLink + "about/"],
+  ["Contact", homeLink + "contact/"],
+  ["GDL in the news", homeLink + "gdl-in-the-news/"],
 ]
 
 const menuItemStyle = {
@@ -112,32 +128,28 @@ const Layout = ({ children }: any) => {
             </div>
           </Typography>
           <Hidden smDown>
-            <Button
-              href="https://home.digitallibrary.io/"
-              key="Home"
-              style={menuItemStyle}
-            >
+            <Button href={homeLink} key="Home" style={menuItemStyle}>
               Home
             </Button>
             <Button href="/" key="Blog" style={menuItemActive}>
               Blog
             </Button>
             <Button
-              href="https://home.digitallibrary.io/about/"
+              href={homeLink + "about/"}
               key="About"
               style={menuItemStyle}
             >
               About
             </Button>
             <Button
-              href="https://home.digitallibrary.io/contact/"
+              href={homeLink + "contact/"}
               key="Contact"
               style={menuItemStyle}
             >
               Contact
             </Button>
             <Button
-              href="https://home.digitallibrary.io/gdl-in-the-news/"
+              href={homeLink + "gdl-in-the-news/"}
               key="gdl-in-the-news"
               style={menuItemStyle}
             >
