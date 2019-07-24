@@ -18,19 +18,18 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer"
 import Helmet from "react-helmet"
 import "../styles/blog-posts.css"
 
+const env = process.env.GATSBY_GDL_ENVIRONMENT || "development"
+
 let homeLink
-switch (process.env.GATSBY_GDL_ENVIRONMENT) {
-  case `test`:
-    homeLink = `https://test.home.digitallibrary.io/`
+switch (env) {
+  case "development":
+    homeLink = "http://localhost:8000/"
     break
-  case `development`:
-    homeLink = `http://localhost:8000/`
-    break
-  case `staging`:
-    homeLink = `https://staging.home.digitallibrary.io/`
+  case "prod":
+    homeLink = "https://home.digitallibrary.io/"
     break
   default:
-    homeLink = `https://home.digitallibrary.io/`
+    homeLink = `https://${env}.home.digitallibrary.io/`
     break
 }
 
