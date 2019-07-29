@@ -29,7 +29,7 @@ switch (env) {
     homeLink = "https://home.digitallibrary.io/"
     break
   default:
-    homeLink = `https://${env}.home.digitallibrary.io/`
+    homeLink = `https://home.${env}.digitallibrary.io/`
     break
 }
 
