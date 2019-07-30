@@ -33,11 +33,6 @@ const Footer = () => {
           <div>
             <a href="https://blog.digitallibrary.io/">Blog</a>
           </div>
-          <div>
-            <a href="https://home.digitallibrary.io/privacy/">
-              Detailed attributions
-            </a>
-          </div>
         </ul>
 
         <div id="creativeCommons">
