@@ -80,6 +80,7 @@ const toggleDrawer = (side, open, state, setState) => event => {
 }
 
 let thisPath: string
+let thisUrl: string
 
 const Layout = ({ children }: any) => {
   const [state, setState] = React.useState({
@@ -88,12 +89,22 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
-      <Helmet title="Blog | Global Digital Library" />
       <Location>
         {({ location }) => {
           thisPath = location.pathname
+          thisUrl = location.href
         }}
       </Location>
+
+      <Helmet title="Blog | Global Digital Library">
+        <meta property="og:url" content={thisUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="Blog | Global Digital Library" />
+        <meta property="og:image" content={gdlLogo} />
+        <meta property="og:image:width" content="512" />
+        <meta property="og:image:height" content="512" />
+      </Helmet>
       <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
           <Hidden mdUp>
