@@ -96,14 +96,15 @@ const Layout = ({ children }: any) => {
         }}
       </Location>
 
-      <Helmet title="Blog | Global Digital Library">
+      <Helmet
+        title="Blog | Global Digital Library"
+        htmlAttributes={{ prefix: "og: http://ogp.me/ns#" }}
+      >
         <meta property="og:url" content={thisUrl} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="Blog | Global Digital Library" />
         <meta property="og:image" content={gdlLogo} />
-        <meta property="og:image:width" content="512" />
-        <meta property="og:image:height" content="512" />
       </Helmet>
       <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
