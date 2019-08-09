@@ -100,10 +100,10 @@ const Layout = ({ children }: any) => {
         title="Blog | Global Digital Library"
         htmlAttributes={{ prefix: "og: http://ogp.me/ns#" }}
       >
-        <meta name="og:url" content={thisUrl} />
-        <meta name="og:type" content="website" />
+        <meta property="og:url" content={thisUrl} />
+        <meta property="og:type" content="website" />
         <meta
-          name="og:description"
+          property="og:description"
           content="News, info and updates on the development of the Global Digital Library.
                   Read about experiences developing the GDL to date and be kept in the loop as it evolves."
         />
@@ -112,10 +112,9 @@ const Layout = ({ children }: any) => {
           content="News, info and updates on the development of the Global Digital Library.
                   Read about experiences developing the GDL to date and be kept in the loop as it evolves."
         />
-        <meta name="og:site_name" content="Blog | Global Digital Library" />
-        <meta name="og:image" content={gdlLogo} />
+        <meta property="og:site_name" content="Blog | Global Digital Library" />
+        <meta property="og:image" content={gdlLogo} />
         <meta name="twitter:card" content="summary" />
-        <meta name="og:site_name" content="Global Digital Library" />
         <meta name="twitter:image:alt" content="Global Digital Library Logo" />
         <meta name="twitter:site" content="@GDigitalLibrary" />
       </Helmet>
