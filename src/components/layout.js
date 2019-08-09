@@ -93,31 +93,39 @@ const Layout = ({ children }: any) => {
         {({ location }) => {
           thisPath = location.pathname
           thisUrl = location.href
+
+          return (
+            <Helmet
+              title="Blog | Global Digital Library"
+              htmlAttributes={{ prefix: "og: http://ogp.me/ns#" }}
+            >
+              <meta property="og:url" content={thisUrl} />
+              <meta property="og:type" content="website" />
+              <meta
+                property="og:description"
+                content="News, info and updates on the development of the Global Digital Library.
+                  Read about experiences developing the GDL to date and be kept in the loop as it evolves."
+              />
+              <meta
+                name="description"
+                content="News, info and updates on the development of the Global Digital Library.
+                  Read about experiences developing the GDL to date and be kept in the loop as it evolves."
+              />
+              <meta
+                property="og:site_name"
+                content="Blog | Global Digital Library"
+              />
+              <meta property="og:image" content={gdlLogo} />
+              <meta name="twitter:card" content="summary" />
+              <meta
+                name="twitter:image:alt"
+                content="Global Digital Library Logo"
+              />
+              <meta name="twitter:site" content="@GDigitalLibrary" />
+            </Helmet>
+          )
         }}
       </Location>
-
-      <Helmet
-        title="Blog | Global Digital Library"
-        htmlAttributes={{ prefix: "og: http://ogp.me/ns#" }}
-      >
-        <meta property="og:url" content={thisUrl} />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:description"
-          content="News, info and updates on the development of the Global Digital Library.
-                  Read about experiences developing the GDL to date and be kept in the loop as it evolves."
-        />
-        <meta
-          name="description"
-          content="News, info and updates on the development of the Global Digital Library.
-                  Read about experiences developing the GDL to date and be kept in the loop as it evolves."
-        />
-        <meta property="og:site_name" content="Blog | Global Digital Library" />
-        <meta property="og:image" content={gdlLogo} />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:image:alt" content="Global Digital Library Logo" />
-        <meta name="twitter:site" content="@GDigitalLibrary" />
-      </Helmet>
       <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
           <Hidden mdUp>
