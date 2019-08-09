@@ -105,6 +105,9 @@ const Layout = ({ children }: any) => {
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="Blog | Global Digital Library" />
         <meta property="og:image" content={gdlLogo} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:site_name" content="Global Digital Library" />
+        <meta name="twitter:image:alt" content="Global Digital Library Logo" />
       </Helmet>
       <AppBar position="sticky" style={{ backgroundColor: "#3C5A99" }}>
         <Toolbar>
