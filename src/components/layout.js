@@ -20,25 +20,14 @@ import "../styles/blog-posts.css"
 
 const env = process.env.GATSBY_GDL_ENVIRONMENT || "development"
 
-let homeLink
-switch (env) {
-  case "development":
-    homeLink = "http://localhost:8000/"
-    break
-  case "prod":
-    homeLink = "https://home.digitallibrary.io/"
-    break
-  default:
-    homeLink = `https://home.${env}.digitallibrary.io/`
-    break
-}
+const HOME_URL = "https://home.digitallibrary.io"
 
 const menuItems = [
-  ["Home", homeLink],
+  ["Home", HOME_URL],
   ["Blog", "/"],
-  ["About", homeLink + "about/"],
-  ["Contact", homeLink + "contact/"],
-  ["GDL in the news", homeLink + "gdl-in-the-news/"],
+  ["About", HOME_URL + "/about"],
+  ["Contact", HOME_URL + "/contact"],
+  ["GDL in the news", HOME_URL + "/gdl-in-the-news"],
 ]
 
 const menuItemStyle = {
@@ -159,28 +148,28 @@ const Layout = ({ children }: any) => {
             </div>
           </Typography>
           <Hidden smDown>
-            <Button href={homeLink} key="Home" style={menuItemStyle}>
+            <Button href={HOME_URL} key="Home" style={menuItemStyle}>
               Home
             </Button>
             <Button href="/" key="Blog" style={menuItemActive}>
               Blog
             </Button>
             <Button
-              href={homeLink + "about/"}
+              href={HOME_URL + "/about"}
               key="About"
               style={menuItemStyle}
             >
               About
             </Button>
             <Button
-              href={homeLink + "contact/"}
+              href={HOME_URL + "/contact"}
               key="Contact"
               style={menuItemStyle}
             >
               Contact
             </Button>
             <Button
-              href={homeLink + "gdl-in-the-news/"}
+              href={HOME_URL + "/gdl-in-the-news"}
               key="gdl-in-the-news"
               style={menuItemStyle}
             >
