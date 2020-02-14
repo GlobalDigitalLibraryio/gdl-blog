@@ -1,3 +1,7 @@
+# DEPRECATED
+Our customer wants to keep the wordpress solution for the GDL blog on blog.digitallibrary.io
+This application until further notice
+
 # Global digital Library blog
 
 ## Prerequisites
